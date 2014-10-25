@@ -1,0 +1,44 @@
+{
+    "name": "xcomjs",
+    "version": "0.0.1",
+    "description": "X-COM: Browser Defense",
+    "keywords": [
+        "browser",
+        "coffeescript",
+        "defense",
+        "elerium",
+        "enemy",
+        "game",
+        "html",
+        "javascript",
+        "ufo",
+        "unknown",
+        "xcom",
+        "x-com"
+    ],
+    "homepage": "https://github.com/blinkdog/xcomjs",
+    "bugs": "https://github.com/blinkdog/xcomjs/issues",
+    "license": "AGPL-3.0",
+    "author": "Patrick Meade <veloxi@ticon.net>",
+    "files": [
+        "ufo.css",
+        "ufo.html",
+        "ufo.js",
+        "README.md",
+        "package.json"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/blinkdog/xcomjs.git"
+    },
+    "dependencies": {
+        "underscore": "1.7.0"
+    },
+    "devDependencies": {
+        "browserify": "6.1.0",
+        "coffee-script": "1.8.0",
+        "istanbul": "0.3.2",
+        "mocha": "2.0.1",
+        "should": "4.1.0"
+    }
+}
