@@ -1,0 +1,3 @@
+#!/usr/bin/env node
+// Usage: bin/make-xcom-data /path/to/XCOM /path/to/data.json
+require('../lib/util/makeXcomData').run(process.argv[2], process.argv[3]);

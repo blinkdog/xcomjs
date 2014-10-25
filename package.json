@@ -1,6 +1,6 @@
 {
     "name": "xcomjs",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "X-COM: Browser Defense",
     "keywords": [
         "browser",
@@ -20,6 +20,9 @@
     "bugs": "https://github.com/blinkdog/xcomjs/issues",
     "license": "AGPL-3.0",
     "author": "Patrick Meade <veloxi@ticon.net>",
+    "bin": {
+        "make-xcom-data": "./bin/make-xcom-data"
+    },
     "files": [
         "ufo.css",
         "ufo.html",
@@ -35,7 +38,7 @@
         "underscore": "1.7.0"
     },
     "devDependencies": {
-        "browserify": "6.1.0",
+        "browserify": "6.2.0",
         "coffee-script": "1.8.0",
         "istanbul": "0.3.2",
         "mocha": "2.0.1",

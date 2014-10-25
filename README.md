@@ -1,6 +1,16 @@
 # xcomjs
 X-COM: Browser Defense
 
+## Installation
+The following sequence will build and run the game in Firefox.
+
+    git clone https://github.com/blinkdog/xcomjs
+    cd xcomjs
+    cake rebuild
+    bin/make-xcom-data /path/to/XCOM data.json
+    cake rebuild
+    cake run
+
 ## License
 xcomjs<br/>
 Copyright 2014 Patrick Meade.
