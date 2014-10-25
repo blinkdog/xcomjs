@@ -1,0 +1,34 @@
+# xcom.coffee
+# Copyright 2014 Patrick Meade.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#----------------------------------------------------------------------------
+
+PALETTES_DAT = new Buffer window.DATA.GEODATA.PALETTES_DAT, 'base64'
+PALETTE_SIZE = 256*3+6
+
+paletteAt = (start) ->
+  result = []
+  for i in [0..255]
+    result.push [
+      # multiplied by 4 to convert VGA colors to browser colors
+      PALETTES_DAT[start+i*3] << 2,
+      PALETTES_DAT[start+i*3+1] << 2,
+      PALETTES_DAT[start+i*3+2] << 2]
+  return result
+
+exports.PALETTES = (paletteAt PALETTE_SIZE*i for i in [0..4])
+
+#----------------------------------------------------------------------------
+# end of xcom.coffee

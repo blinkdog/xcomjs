@@ -19,6 +19,18 @@ XCOM_SIZE =
   width: 320
   height: 200
 
+toFillStyle = (rgb) ->
+  r = rgb[0]
+  g = rgb[1]
+  b = rgb[2]
+  rs = "00" + r.toString 16
+  gs = "00" + g.toString 16
+  bs = "00" + b.toString 16
+  rs = rs.substr -2
+  gs = gs.substr -2
+  bs = bs.substr -2
+  "##{rs}#{gs}#{bs}"
+
 resize = ->
   # determine how large the window is
   { innerHeight, innerWidth } = window
@@ -35,8 +47,20 @@ resize = ->
   canvas.getContext("2d").fillRect 0, 0, canvas.width, canvas.height
   canvas.getContext("2d").fillStyle = '#ff00ff' # magic pink
   canvas.getContext("2d").fillRect canvas.ox, canvas.oy, XCOM_SIZE.width * canvas.scale, XCOM_SIZE.height * canvas.scale
+  # draw some stuff on the canvas to prove we got the palettes
+  for palIndex in [0..4]
+    for colIndex in [0..255]
+      fillStyle = toFillStyle window.XCOM.PALETTES[palIndex][colIndex]
+      canvas.getContext("2d").fillStyle = fillStyle
+      dx = canvas.ox+canvas.scale*colIndex
+      dy = canvas.oy+canvas.scale*40*palIndex
+      dw = canvas.scale
+      dh = canvas.scale*40
+      canvas.getContext("2d").fillRect dx, dy, dw, dh
 
 exports.run = ->
+  # add the X-COM game data objects
+  window.XCOM = require './xcom'
   # manually resize the canvas once
   resize()
   # if the user resizes the browser, then resize the canvas to match
