@@ -61,11 +61,21 @@ drawPalettes = ->
       dh = canvas.scale*40
       canvas.getContext("2d").fillRect dx, dy, dw, dh
 
+# TODO: Refactor this away
 drawBackground = ->
   background = require('./gfx').getBackgroundImage 0, 0
   canvas = $("#canvas")[0]
   context = canvas.getContext("2d")
   context.drawImage background, 0, 0, 320, 200, canvas.ox, canvas.oy, 320*canvas.scale, 200*canvas.scale
+
+# TODO: Refactor this away
+drawButtons = ->
+  button = require('./gfx').getButton 0, 134, 192, 20
+  canvas = $("#canvas")[0]
+  context = canvas.getContext("2d")
+  context.drawImage button, 0, 0, 192, 20, canvas.ox+64*canvas.scale, canvas.oy+90*canvas.scale, 192*canvas.scale, 20*canvas.scale
+  context.drawImage button, 0, 0, 192, 20, canvas.ox+64*canvas.scale, canvas.oy+118*canvas.scale, 192*canvas.scale, 20*canvas.scale
+  context.drawImage button, 0, 0, 192, 20, canvas.ox+64*canvas.scale, canvas.oy+146*canvas.scale, 192*canvas.scale, 20*canvas.scale
 
 exports.run = ->
   # add the X-COM game data objects
@@ -76,6 +86,7 @@ exports.run = ->
   window.addEventListener 'resize', resize
   # let's draw a background to show that we can do it
   drawBackground 0
+  drawButtons()
 
 #----------------------------------------------------------------------------
 # end of xcomjs.coffee
