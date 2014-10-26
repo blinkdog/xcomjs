@@ -80,23 +80,18 @@ createButton = (scale, palIndex, colIndex, width, height) ->
   context = canvas.getContext '2d'
   pixels = context.getImageData 0, 0, canvas.width, canvas.height
   # draw the button
-  console.log 'Drawing 0/4 Horiz'
   for x in [0...width]
     putScaledPixel scale, pixels, x, 0, palette[colIndex]
     putScaledPixel scale, pixels, x, height-1, palette[colIndex+4]
-  console.log 'Drawing 0/4 Vert'
   for y in [0...height]
     putScaledPixel scale, pixels, 0, y, palette[colIndex]
     putScaledPixel scale, pixels, width-1, y, palette[colIndex+4]
-  console.log 'Drawing 1/3 Horiz'
   for x in [1...width-1]
     putScaledPixel scale, pixels, x, 1, palette[colIndex+1]
     putScaledPixel scale, pixels, x, height-2, palette[colIndex+3]
-  console.log 'Drawing 1/3 Vert'
   for y in [1...height-1]
     putScaledPixel scale, pixels, 1, y, palette[colIndex+1]
     putScaledPixel scale, pixels, width-2, y, palette[colIndex+3]
-  console.log 'Drawing 2 Fill'
   for y in [2...height-2]
     for x in [2...width-2]
       putScaledPixel scale, pixels, x, y, palette[colIndex+2]
@@ -110,6 +105,66 @@ createButtonMemo = _.memoize createButton, createButtonHash
 
 exports.getButton = (scale, palIndex, colIndex, width, height) ->
   createButtonMemo scale, palIndex, colIndex, width, height
+
+###
+  Window Border
+###
+createWindowBorder = (scale, palIndex, colIndex, width, height) ->
+  console.log 'createWindowBorder %d %d %d %d %d', scale, palIndex, colIndex, width, height
+  # obtain the game data from X-COM
+  palette = window.XCOM.PALETTES[palIndex]
+  # create a canvas element to hold the image data
+  canvas = document.createElement 'canvas'
+  canvas.width = width*scale
+  canvas.height = height*scale
+  context = canvas.getContext '2d'
+  pixels = context.getImageData 0, 0, canvas.width, canvas.height
+  # draw the window border
+  for x in [0...width] ## outer 3
+    putScaledPixel scale, pixels, x, 0, palette[colIndex+2]
+    putScaledPixel scale, pixels, x, height-1, palette[colIndex+2]
+  for y in [0...height]
+    putScaledPixel scale, pixels, 0, y, palette[colIndex+2]
+    putScaledPixel scale, pixels, width-1, y, palette[colIndex+2]
+
+  for x in [1...width-1] ## outer 2
+    putScaledPixel scale, pixels, x, 1, palette[colIndex+1]
+    putScaledPixel scale, pixels, x, height-2, palette[colIndex+1]
+  for y in [1...height-1]
+    putScaledPixel scale, pixels, 1, y, palette[colIndex+1]
+    putScaledPixel scale, pixels, width-2, y, palette[colIndex+1]
+
+  for x in [2...width-2] ## inner 1
+    putScaledPixel scale, pixels, x, 2, palette[colIndex]
+    putScaledPixel scale, pixels, x, height-3, palette[colIndex]
+  for y in [2...height-2]
+    putScaledPixel scale, pixels, 2, y, palette[colIndex]
+    putScaledPixel scale, pixels, width-3, y, palette[colIndex]
+
+  for x in [3...width-3] ## inner 2
+    putScaledPixel scale, pixels, x, 3, palette[colIndex+1]
+    putScaledPixel scale, pixels, x, height-4, palette[colIndex+1]
+  for y in [3...height-3]
+    putScaledPixel scale, pixels, 3, y, palette[colIndex+1]
+    putScaledPixel scale, pixels, width-4, y, palette[colIndex+1]
+
+  for x in [4...width-4] ## inner 3
+    putScaledPixel scale, pixels, x, 4, palette[colIndex+2]
+    putScaledPixel scale, pixels, x, height-5, palette[colIndex+2]
+  for y in [4...height-4]
+    putScaledPixel scale, pixels, 4, y, palette[colIndex+2]
+    putScaledPixel scale, pixels, width-5, y, palette[colIndex+2]
+
+  context.putImageData pixels, 0, 0
+  return canvas
+
+createWindowBorderHash = (scale, palIndex, colIndex, width, height) ->
+  "#{scale},#{palIndex},#{colIndex},#{width},#{height}"
+
+createWindowBorderMemo = _.memoize createWindowBorder, createWindowBorderHash
+
+exports.getWindowBorder = (scale, palIndex, colIndex, width, height) ->
+  createWindowBorderMemo scale, palIndex, colIndex, width, height
 
 #----------------------------------------------------------------------------
 # end of gfx.coffee

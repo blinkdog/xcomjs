@@ -31,3 +31,34 @@ The upper-left corners of the three buttons are located at:
 64, 90
 64, 118
 64, 146
+
+## Window Borders
+The window border on the intro screen uses the following shades:
+
+[1] 101, 207, 190   (index 134)
+[2] 60, 166, 146    (index 135)
+[3] 28, 130, 141    (index 136)
+
+These shades seem to correspond to the GeoScape palette (full palette 0),
+indexes 134-136 (inclusive).
+
+The graphical layout of the window border is as follows:
+
+33333333333333333333333333333333333
+32222222222222222222222222222222223
+32111111111111111111111111111111123
+32122222222222222222222222222222123
+32123333333333333333333333333332123
+32123                         32123
+32123                         32123
+32123                         32123
+32123                         32123
+32123333333333333333333333333332123
+32122222222222222222222222222222123
+32111111111111111111111111111111123
+32222222222222222222222222222222223
+33333333333333333333333333333333333
+
+The size of the intro screen window border is 256 x 160 pixels.
+
+The upper-left of the window border is located at: 32, 20

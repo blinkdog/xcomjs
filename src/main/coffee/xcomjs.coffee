@@ -62,12 +62,26 @@ drawPalettes = ->
       canvas.getContext("2d").fillRect dx, dy, dw, dh
 
 # TODO: Refactor this away
+clearCanvas = ->
+  canvas = $("#canvas")[0]
+  context = canvas.getContext("2d")
+  context.fillStyle = '#000000'
+  context.clearRect 0, 0, canvas.width, canvas.height
+
+# TODO: Refactor this away
 drawBackground = ->
   canvas = $("#canvas")[0]
   context = canvas.getContext("2d")
   background = require('./gfx').getBackgroundImage canvas.scale, 0, 0
-#  context.drawImage background, 0, 0, 320, 200, canvas.ox, canvas.oy, 320*canvas.scale, 200*canvas.scale
-  context.drawImage background, canvas.ox, canvas.oy
+#  context.drawImage background, canvas.ox, canvas.oy
+  context.drawImage background, 32*canvas.scale, 20*canvas.scale, 256*canvas.scale, 160*canvas.scale, canvas.ox+32*canvas.scale, canvas.oy+20*canvas.scale, 256*canvas.scale, 160*canvas.scale
+
+# TODO: Refactor this away
+drawWindowBorder = ->
+  canvas = $("#canvas")[0]
+  context = canvas.getContext("2d")
+  windowBorder = require('./gfx').getWindowBorder canvas.scale, 0, 134, 256, 160
+  context.drawImage windowBorder, canvas.ox+32*canvas.scale, canvas.oy+20*canvas.scale
 
 # TODO: Refactor this away
 drawButtons = ->
@@ -85,8 +99,10 @@ exports.run = ->
   resize()
   # if the user resizes the browser, then resize the canvas to match
   window.addEventListener 'resize', resize
-  # let's draw a background to show that we can do it
+  # let's draw an image to show that we can do it
+  clearCanvas()
   drawBackground()
+  drawWindowBorder()
   drawButtons()
 
 #----------------------------------------------------------------------------
