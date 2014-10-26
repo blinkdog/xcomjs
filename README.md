@@ -18,6 +18,10 @@ I wrote xcomjs, but drew heavily upon the reference material found at
 shoulders of the geniuses who reverse engineered and clearly documented
 the binary file formats of the original UFO: Enemy Unknown.
 
+I'd also like to thank Dominic Szablewski for his blog post [Drawing Pixels is
+Hard](http://phoboslab.org/log/2012/09/drawing-pixels-is-hard). It pointed me
+in the right direction for rendering pixel graphics on the HTML5 canvas.
+
 ## License
 xcomjs<br/>
 Copyright 2014 Patrick Meade.

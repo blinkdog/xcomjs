@@ -63,19 +63,20 @@ drawPalettes = ->
 
 # TODO: Refactor this away
 drawBackground = ->
-  background = require('./gfx').getBackgroundImage 0, 0
   canvas = $("#canvas")[0]
   context = canvas.getContext("2d")
-  context.drawImage background, 0, 0, 320, 200, canvas.ox, canvas.oy, 320*canvas.scale, 200*canvas.scale
+  background = require('./gfx').getBackgroundImage canvas.scale, 0, 0
+#  context.drawImage background, 0, 0, 320, 200, canvas.ox, canvas.oy, 320*canvas.scale, 200*canvas.scale
+  context.drawImage background, canvas.ox, canvas.oy
 
 # TODO: Refactor this away
 drawButtons = ->
-  button = require('./gfx').getButton 0, 134, 192, 20
   canvas = $("#canvas")[0]
   context = canvas.getContext("2d")
-  context.drawImage button, 0, 0, 192, 20, canvas.ox+64*canvas.scale, canvas.oy+90*canvas.scale, 192*canvas.scale, 20*canvas.scale
-  context.drawImage button, 0, 0, 192, 20, canvas.ox+64*canvas.scale, canvas.oy+118*canvas.scale, 192*canvas.scale, 20*canvas.scale
-  context.drawImage button, 0, 0, 192, 20, canvas.ox+64*canvas.scale, canvas.oy+146*canvas.scale, 192*canvas.scale, 20*canvas.scale
+  button = require('./gfx').getButton canvas.scale, 0, 134, 192, 20
+  context.drawImage button, canvas.ox+64*canvas.scale, canvas.oy+90*canvas.scale
+  context.drawImage button, canvas.ox+64*canvas.scale, canvas.oy+118*canvas.scale
+  context.drawImage button, canvas.ox+64*canvas.scale, canvas.oy+146*canvas.scale
 
 exports.run = ->
   # add the X-COM game data objects
@@ -85,7 +86,7 @@ exports.run = ->
   # if the user resizes the browser, then resize the canvas to match
   window.addEventListener 'resize', resize
   # let's draw a background to show that we can do it
-  drawBackground 0
+  drawBackground()
   drawButtons()
 
 #----------------------------------------------------------------------------
