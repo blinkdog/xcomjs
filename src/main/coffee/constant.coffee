@@ -1,4 +1,4 @@
-# makeXcomData.coffee
+# constant.coffee
 # Copyright 2014 Patrick Meade.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -15,26 +15,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #----------------------------------------------------------------------------
 
-fs = require 'fs'
-path = require 'path'
-
-source = (xcomPath, filePath) ->
-  dataPath = path.join xcomPath, filePath
-  data = fs.readFileSync dataPath
-  data.toString 'base64'
-
-exports.run = (xcomPath, dataPath) ->
-  # build the X-COM game data object
-  XCOMDATA =
-    GEODATA:
-      BACKPALS: source xcomPath, 'GEODATA/BACKPALS.DAT'
-      PALETTES: source xcomPath, 'GEODATA/PALETTES.DAT'
-    GEOGRAPH:
-      BACK: (source xcomPath, "GEOGRAPH/BACK#{("0"+i).substr(-2)}.SCR" for i in [1..17])
-  # write the X-COM game data object to a json file
-  dataOut = fs.createWriteStream dataPath
-  dataOut.write JSON.stringify XCOMDATA, null, 2
-  dataOut.end()
+exports.XCOM_SIZE =
+  HEIGHT: 200
+  WIDTH: 320
 
 #----------------------------------------------------------------------------
-# end of makeXcomData.coffee
+# end of constant.coffee

@@ -15,7 +15,44 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #----------------------------------------------------------------------------
 
-PALETTES_DAT = new Buffer window.DATA.GEODATA.PALETTES_DAT, 'base64'
+###
+  GEOGRAPH/BACKxx.DAT | xx = [01..17]
+###
+BACK = (new Buffer back, 'base64' for back in window.DATA.GEOGRAPH.BACK)
+
+reframeBack = (back) ->
+  result = []
+  for i in [0..199]
+    row = []
+    for j in [0..319]
+      row.push back[i*320+j]
+    result.push row
+  return result
+
+exports.BACK = (reframeBack back for back in BACK)
+
+###
+  GEODATA/BACKPALS.DAT
+###
+BACKPALS = new Buffer window.DATA.GEODATA.BACKPALS, 'base64'
+BACKPAL_SIZE = 16*3
+
+backpalAt = (start) ->
+  result = []
+  for i in [0..15]
+    result.push [
+      # multiplied by 4 to convert VGA colors to browser colors
+      BACKPALS[start+i*3] << 2,
+      BACKPALS[start+i*3+1] << 2,
+      BACKPALS[start+i*3+2] << 2]
+  return result
+
+exports.BACKPALS = (backpalAt BACKPAL_SIZE*i for i in [0..7])
+
+###
+  GEODATA/PALETTES.DAT
+###
+PALETTES = new Buffer window.DATA.GEODATA.PALETTES, 'base64'
 PALETTE_SIZE = 256*3+6
 
 paletteAt = (start) ->
@@ -23,9 +60,9 @@ paletteAt = (start) ->
   for i in [0..255]
     result.push [
       # multiplied by 4 to convert VGA colors to browser colors
-      PALETTES_DAT[start+i*3] << 2,
-      PALETTES_DAT[start+i*3+1] << 2,
-      PALETTES_DAT[start+i*3+2] << 2]
+      PALETTES[start+i*3] << 2,
+      PALETTES[start+i*3+1] << 2,
+      PALETTES[start+i*3+2] << 2]
   return result
 
 exports.PALETTES = (paletteAt PALETTE_SIZE*i for i in [0..4])

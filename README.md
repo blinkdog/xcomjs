@@ -6,10 +6,17 @@ The following sequence will build and run the game in Firefox.
 
     git clone https://github.com/blinkdog/xcomjs
     cd xcomjs
+    npm install
     cake rebuild
     bin/make-xcom-data /path/to/XCOM data.json
     cake rebuild
     cake run
+
+## Thanks
+I wrote xcomjs, but drew heavily upon the reference material found at
+[UFOpaedia.org](http://ufopaedia.org/). Truly, my code stands upon the
+shoulders of the geniuses who reverse engineered and clearly documented
+the binary file formats of the original UFO: Enemy Unknown.
 
 ## License
 xcomjs<br/>
