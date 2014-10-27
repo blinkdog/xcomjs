@@ -62,3 +62,24 @@ The graphical layout of the window border is as follows:
 The size of the intro screen window border is 256 x 160 pixels.
 
 The upper-left of the window border is located at: 32, 20
+
+## Fonts
+There are two different font colors in use on the intro screen. The
+font color used to display the title uses the following shade:
+
+[1] 170, 190, 81    (index 139)
+
+This shade seems to correspond to the GeoScape palette (full palette 0),
+index 139.
+
+The font color used on the buttons seems to match the button
+shades:
+
+[1] 101, 207, 190   (index 134)
+[2] 60, 166, 146    (index 135)
+[3] 28, 130, 141    (index 136)
+[4] 8, 89, 65       (index 137)
+[5] 0, 52, 32       (index 138)
+
+These shades seem to correspond to the GeoScape palette (full palette 0),
+indexes 134-138 (inclusive).

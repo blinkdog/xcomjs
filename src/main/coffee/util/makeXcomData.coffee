@@ -28,7 +28,9 @@ exports.run = (xcomPath, dataPath) ->
   XCOMDATA =
     GEODATA:
       BACKPALS: source xcomPath, 'GEODATA/BACKPALS.DAT'
+      BIGLETS: source xcomPath, 'GEODATA/BIGLETS.DAT'
       PALETTES: source xcomPath, 'GEODATA/PALETTES.DAT'
+      SMALLSET: source xcomPath, 'GEODATA/SMALLSET.DAT'
     GEOGRAPH:
       BACK: (source xcomPath, "GEOGRAPH/BACK#{("0"+i).substr(-2)}.SCR" for i in [1..17])
   # write the X-COM game data object to a json file

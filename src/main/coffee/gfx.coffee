@@ -16,7 +16,7 @@
 #----------------------------------------------------------------------------
 
 _ = require 'underscore'
-{XCOM_SIZE} = require './constant'
+{GLYPH_SIZE, XCOM_SIZE} = require './constant'
 
 #----------------------------------------------------------------------------
 
@@ -105,6 +105,68 @@ createButtonMemo = _.memoize createButton, createButtonHash
 
 exports.getButton = (scale, palIndex, colIndex, width, height) ->
   createButtonMemo scale, palIndex, colIndex, width, height
+
+###
+  Large Glyphs
+###
+createLargeGlyph = (scale, palIndex, colIndex, glyphIndex) ->
+  console.log 'createLargeGlyph %d %d %d %d', scale, palIndex, colIndex, glyphIndex
+  # obtain the game data from X-COM
+  palette = window.XCOM.PALETTES[palIndex]
+  biglets = window.XCOM.BIGLETS[glyphIndex]
+  # create a canvas element to hold the image data
+  canvas = document.createElement 'canvas'
+  canvas.width = GLYPH_SIZE.LARGE.WIDTH * scale
+  canvas.height = GLYPH_SIZE.LARGE.HEIGHT * scale
+  context = canvas.getContext '2d'
+  pixels = context.getImageData 0, 0, canvas.width, canvas.height
+  # draw the button
+  for y in [0...GLYPH_SIZE.LARGE.HEIGHT]
+    for x in [0...GLYPH_SIZE.LARGE.WIDTH]
+      if biglets[y][x] isnt 0
+        palIndex = colIndex + biglets[y][x] - 1
+        putScaledPixel scale, pixels, x, y, palette[palIndex]
+  context.putImageData pixels, 0, 0
+  return canvas
+
+createLargeGlyphHash = (scale, palIndex, colIndex, glyphIndex) ->
+  "#{scale},#{palIndex},#{colIndex},#{glyphIndex}"
+
+createLargeGlyphMemo = _.memoize createLargeGlyph, createLargeGlyphHash
+
+exports.getLargeGlyph = (scale, palIndex, colIndex, glyphIndex) ->
+  createLargeGlyphMemo scale, palIndex, colIndex, glyphIndex
+
+###
+  Small Glyphs
+###
+createSmallGlyph = (scale, palIndex, colIndex, glyphIndex) ->
+  console.log 'createSmallGlyph %d %d %d %d', scale, palIndex, colIndex, glyphIndex
+  # obtain the game data from X-COM
+  palette = window.XCOM.PALETTES[palIndex]
+  smallset = window.XCOM.SMALLSET[glyphIndex]
+  # create a canvas element to hold the image data
+  canvas = document.createElement 'canvas'
+  canvas.width = GLYPH_SIZE.SMALL.WIDTH * scale
+  canvas.height = GLYPH_SIZE.SMALL.HEIGHT * scale
+  context = canvas.getContext '2d'
+  pixels = context.getImageData 0, 0, canvas.width, canvas.height
+  # draw the button
+  for y in [0...GLYPH_SIZE.SMALL.HEIGHT]
+    for x in [0...GLYPH_SIZE.SMALL.WIDTH]
+      if smallset[y][x] isnt 0
+        palIndex = colIndex + smallset[y][x] - 1
+        putScaledPixel scale, pixels, x, y, palette[palIndex]
+  context.putImageData pixels, 0, 0
+  return canvas
+
+createSmallGlyphHash = (scale, palIndex, colIndex, glyphIndex) ->
+  "#{scale},#{palIndex},#{colIndex},#{glyphIndex}"
+
+createSmallGlyphMemo = _.memoize createSmallGlyph, createSmallGlyphHash
+
+exports.getSmallGlyph = (scale, palIndex, colIndex, glyphIndex) ->
+  createSmallGlyphMemo scale, palIndex, colIndex, glyphIndex
 
 ###
   Window Border

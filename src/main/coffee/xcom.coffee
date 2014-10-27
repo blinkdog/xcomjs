@@ -15,6 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #----------------------------------------------------------------------------
 
+{GLYPH_SIZE} = require './constant'
+
 ###
   GEOGRAPH/BACKxx.DAT | xx = [01..17]
 ###
@@ -50,6 +52,23 @@ backpalAt = (start) ->
 exports.BACKPALS = (backpalAt BACKPAL_SIZE*i for i in [0..7])
 
 ###
+  GEODATA/BIGLETS.DAT
+###
+BIGLETS = new Buffer window.DATA.GEODATA.BIGLETS, 'base64'
+BIGLETS_SIZE = GLYPH_SIZE.LARGE.WIDTH * GLYPH_SIZE.LARGE.HEIGHT
+
+bigletAt = (start) ->
+  result = []
+  for i in [0...GLYPH_SIZE.LARGE.HEIGHT]
+    row = []
+    for j in [0...GLYPH_SIZE.LARGE.WIDTH]
+      row.push BIGLETS[start+i*GLYPH_SIZE.LARGE.WIDTH+j]
+    result.push row
+  return result
+
+exports.BIGLETS = (bigletAt BIGLETS_SIZE*i for i in [0...BIGLETS.length/BIGLETS_SIZE])
+
+###
   GEODATA/PALETTES.DAT
 ###
 PALETTES = new Buffer window.DATA.GEODATA.PALETTES, 'base64'
@@ -66,6 +85,23 @@ paletteAt = (start) ->
   return result
 
 exports.PALETTES = (paletteAt PALETTE_SIZE*i for i in [0..4])
+
+###
+  GEODATA/BIGLETS.DAT
+###
+SMALLSET = new Buffer window.DATA.GEODATA.SMALLSET, 'base64'
+SMALLSET_SIZE = GLYPH_SIZE.SMALL.WIDTH * GLYPH_SIZE.SMALL.HEIGHT
+
+smallsetAt = (start) ->
+  result = []
+  for i in [0...GLYPH_SIZE.SMALL.HEIGHT]
+    row = []
+    for j in [0...GLYPH_SIZE.SMALL.WIDTH]
+      row.push SMALLSET[start+i*GLYPH_SIZE.SMALL.WIDTH+j]
+    result.push row
+  return result
+
+exports.SMALLSET = (smallsetAt SMALLSET_SIZE*i for i in [0...SMALLSET.length/SMALLSET_SIZE])
 
 #----------------------------------------------------------------------------
 # end of xcom.coffee

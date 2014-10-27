@@ -15,9 +15,17 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #----------------------------------------------------------------------------
 
+exports.GLYPH_SIZE =
+  LARGE:
+    WIDTH: 16
+    HEIGHT: 16
+  SMALL:
+    WIDTH: 8
+    HEIGHT: 9
+
 exports.XCOM_SIZE =
-  HEIGHT: 200
   WIDTH: 320
+  HEIGHT: 200
 
 #----------------------------------------------------------------------------
 # end of constant.coffee

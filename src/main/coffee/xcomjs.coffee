@@ -92,7 +92,32 @@ drawButtons = ->
   context.drawImage button, canvas.ox+64*canvas.scale, canvas.oy+118*canvas.scale
   context.drawImage button, canvas.ox+64*canvas.scale, canvas.oy+146*canvas.scale
 
+# TODO: Refactor this away
+drawAllText = -> # actually, not quite ALL the text...
+  gfx = require './gfx'
+  canvas = $("#canvas")[0]
+  context = canvas.getContext("2d")
+  # draw large glyphs
+  for y in [0...8]
+    for x in [0...20]
+      largeGlyph = gfx.getLargeGlyph canvas.scale, 0, 139, y*20+x
+      context.drawImage largeGlyph, canvas.ox+x*16*canvas.scale, canvas.oy+y*16*canvas.scale
+  # draw small glyphs
+  for y in [0...4]
+    for x in [0...40]
+      smallGlyph = gfx.getSmallGlyph canvas.scale, 0, 139, y*40+x
+      context.drawImage smallGlyph, canvas.ox+x*8*canvas.scale, canvas.oy+128*canvas.scale+y*9*canvas.scale
+
+installShimJQ = ->
+  window.$ = (selector) ->
+    if selector is "#canvas"
+      return [ document.getElementById("canvas") ]
+    alert "Unknown selector #{selector}"
+
 exports.run = ->
+  # shim jQuery if needed
+  if not window.$
+    installShimJQ()
   # add the X-COM game data objects
   window.XCOM = require './xcom'
   # manually resize the canvas once
@@ -104,6 +129,7 @@ exports.run = ->
   drawBackground()
   drawWindowBorder()
   drawButtons()
+  drawAllText()
 
 #----------------------------------------------------------------------------
 # end of xcomjs.coffee

@@ -1,6 +1,5 @@
 # TODO
-* [X] Add square window borders to gfx.coffee
-* [ ] Add large and small fonts to gfx.coffee
+* [X] Add large and small fonts to gfx.coffee
 * [ ] Implement a main game loop
 * [ ] Implement the language select screen
 
