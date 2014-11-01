@@ -29,6 +29,12 @@ exports.run = (xcomPath, dataPath) ->
     GEODATA:
       BACKPALS: source xcomPath, 'GEODATA/BACKPALS.DAT'
       BIGLETS: source xcomPath, 'GEODATA/BIGLETS.DAT'
+      ENGLISH: source xcomPath, 'GEODATA/ENGLISH.DAT'
+      ENGLISH2: source xcomPath, 'GEODATA/ENGLISH2.DAT'
+      FRENCH: source xcomPath, 'GEODATA/FRENCH.DAT'
+      FRENCH2: source xcomPath, 'GEODATA/FRENCH2.DAT'
+      GERMAN: source xcomPath, 'GEODATA/GERMAN.DAT'
+      GERMAN2: source xcomPath, 'GEODATA/GERMAN2.DAT'
       PALETTES: source xcomPath, 'GEODATA/PALETTES.DAT'
       SMALLSET: source xcomPath, 'GEODATA/SMALLSET.DAT'
     GEOGRAPH:

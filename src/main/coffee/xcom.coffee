@@ -16,6 +16,22 @@
 #----------------------------------------------------------------------------
 
 {GLYPH_SIZE} = require './constant'
+cp437 = require './cp437'
+
+#----------------------------------------------------------------------------
+
+parseStrings = (buffer) ->
+  result = []
+  string = ""
+  for byte in buffer
+    if byte is 0
+      result.push string
+      string = ""
+    else
+      string += String.fromCharCode cp437.toUnicode byte
+  return result
+
+#----------------------------------------------------------------------------
 
 ###
   GEOGRAPH/BACKxx.DAT | xx = [01..17]
@@ -67,6 +83,32 @@ bigletAt = (start) ->
   return result
 
 exports.BIGLETS = (bigletAt BIGLETS_SIZE*i for i in [0...BIGLETS.length/BIGLETS_SIZE])
+
+###
+  GEODATA/ENGLISH.DAT
+  GEODATA/ENGLISH2.DAT
+  GEODATA/FRENCH.DAT
+  GEODATA/FRENCH2.DAT
+  GEODATA/GERMAN.DAT
+  GEODATA/GERMAN2.DAT
+###
+ENGLISH = new Buffer window.DATA.GEODATA.ENGLISH, 'base64'
+exports.ENGLISH = parseStrings ENGLISH
+
+ENGLISH2 = new Buffer window.DATA.GEODATA.ENGLISH2, 'base64'
+exports.ENGLISH2 = parseStrings ENGLISH2
+
+FRENCH = new Buffer window.DATA.GEODATA.FRENCH, 'base64'
+exports.FRENCH = parseStrings FRENCH
+
+FRENCH2 = new Buffer window.DATA.GEODATA.FRENCH2, 'base64'
+exports.FRENCH2 = parseStrings FRENCH2
+
+GERMAN = new Buffer window.DATA.GEODATA.GERMAN, 'base64'
+exports.GERMAN = parseStrings GERMAN
+
+GERMAN2 = new Buffer window.DATA.GEODATA.GERMAN2, 'base64'
+exports.GERMAN2 = parseStrings GERMAN2
 
 ###
   GEODATA/PALETTES.DAT

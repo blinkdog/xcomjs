@@ -1,6 +1,21 @@
 # xcomjs
 X-COM: Browser Defense
 
+## IMPORTANT
+This project requires a copy of UFO: Enemy Unknown or X-COM: UFO Defense.
+That is, a copy of the original X-COM, released by Microprose in 1994.
+
+### Sources
+The original X-COM is still available from many sources.
+
+* [Amazon](http://www.amazon.com/dp/B00002SFNO)
+* [Direct2Drive](http://www.direct2drive.com/4/7575/product/Buy-X-Com:-UFO-Defense-Download)
+* [eBay](http://www.ebay.com/sch/i.html?_nkw=xcom+ufo+defense)
+* [Steam](http://store.steampowered.com/app/7760/)
+
+Personally, I own three copies of X-COM; two physical and one on Steam.
+Steam is very convenient way to obtain the game, and it's only $5.00!
+
 ## Installation
 The following sequence will build and run the game in Firefox.
 

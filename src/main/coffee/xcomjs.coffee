@@ -108,6 +108,20 @@ drawAllText = -> # actually, not quite ALL the text...
       smallGlyph = gfx.getSmallGlyph canvas.scale, 0, 139, y*40+x
       context.drawImage smallGlyph, canvas.ox+x*8*canvas.scale, canvas.oy+128*canvas.scale+y*9*canvas.scale
 
+# TODO: Refactor this away
+drawSomeText = ->
+  gfx = require './gfx'
+  canvas = $("#canvas")[0]
+  context = canvas.getContext("2d")
+  # draw small glyphs
+  for y in [0...17]
+    for x in [0...10]
+      smallGlyph = gfx.getSmallGlyph canvas.scale, 0, 139, y*10+x
+      context.drawImage smallGlyph, canvas.ox+x*8*canvas.scale, canvas.oy+y*9*canvas.scale
+  for x in [0...3]
+    smallGlyph = gfx.getSmallGlyph canvas.scale, 0, 139, 170+x
+    context.drawImage smallGlyph, canvas.ox+x*8*canvas.scale, canvas.oy+17*9*canvas.scale
+
 installShimJQ = ->
   window.$ = (selector) ->
     if selector is "#canvas"
@@ -129,7 +143,21 @@ exports.run = ->
   drawBackground()
   drawWindowBorder()
   drawButtons()
-  drawAllText()
+#  drawAllText()
+#  drawSomeText()
+#  smallFont = require('./font').getSmallFont canvas.scale, 0, 134
+#  console.log smallFont
+  canvas = $("#canvas")[0]
+  largeFont = require('./font').getLargeFont canvas.scale, 0, 139
+  smallFont = require('./font').getSmallFont canvas.scale, 0, 139
+  render = require './render'
+  render.drawText canvas, largeFont, "UFO", 145, 45
+  render.drawText canvas, smallFont, "Enemy Unknown", 127, 61
+
+  smallGreenFont = require('./font').getSmallFont canvas.scale, 0, 134
+  render.drawText canvas, smallGreenFont, "New Game", 139, 96
+  render.drawText canvas, smallGreenFont, "Load Saved Game", 122, 124
+  render.drawText canvas, smallGreenFont, "Quit", 152, 152
 
 #----------------------------------------------------------------------------
 # end of xcomjs.coffee
