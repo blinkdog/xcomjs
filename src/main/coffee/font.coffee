@@ -79,11 +79,35 @@ measureGlyph = (glyph) ->
 
 #----------------------------------------------------------------------------
 
+# PMM: Refactor with measureSmall below
+measureLarge = (text) ->
+  width = 0
+  for char in text
+    if char is ' '
+      width += @spaceWidth
+    else
+      charIndex = @encoding.indexOf char
+      fontObj = @[charIndex]
+      width += fontObj.width
+  return width
+
+# PMM: Refactor with measureLarge above
+measureSmall = (text) ->
+  width = 1
+  for char in text
+    if char is ' '
+      width += @spaceWidth
+    else
+      charIndex = @encoding.indexOf char
+      fontObj = @[charIndex]
+      width += fontObj.width
+  return width
+
 ###
   Large Fonts
 ###
 createLargeFont = (scale, palIndex, colIndex) ->
-  console.log 'createLargeFont %d %d %d %d', scale, palIndex, colIndex
+  #console.log 'createLargeFont %d %d %d %d', scale, palIndex, colIndex
   result = []
   # create all the glyphs in the font
   for i in [0...window.XCOM.BIGLETS.length]
@@ -95,6 +119,7 @@ createLargeFont = (scale, palIndex, colIndex) ->
   # annotate the font
   result.encoding = BIGLETS_ENCODING
   result.spaceWidth = 11
+  result.measure = measureLarge
   return result
 
 createLargeFontHash = (scale, palIndex, colIndex) ->
@@ -109,7 +134,7 @@ exports.getLargeFont = (scale, palIndex, colIndex) ->
   Small Fonts
 ###
 createSmallFont = (scale, palIndex, colIndex) ->
-  console.log 'createSmallFont %d %d %d %d', scale, palIndex, colIndex
+  #console.log 'createSmallFont %d %d %d %d', scale, palIndex, colIndex
   result = []
   # create all the glyphs in the font
   for i in [0...window.XCOM.SMALLSET.length]
@@ -125,6 +150,7 @@ createSmallFont = (scale, palIndex, colIndex) ->
   # annotate the font
   result.encoding = SMALLSET_ENCODING
   result.spaceWidth = 5
+  result.measure = measureSmall
   return result
 
 createSmallFontHash = (scale, palIndex, colIndex) ->

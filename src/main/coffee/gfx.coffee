@@ -39,7 +39,7 @@ putScaledPixel = (scale, pixels, x, y, rgb) ->
   Background Images
 ###
 createBackgroundImage = (scale, backIndex, palIndex) ->
-  console.log 'createBackgroundImage %d %d %d', scale, backIndex, palIndex
+  #console.log 'createBackgroundImage %d %d %d', scale, backIndex, palIndex
   # obtain the game data from X-COM
   backImg = window.XCOM.BACK[backIndex]
   backPal = window.XCOM.BACKPALS[palIndex]
@@ -70,7 +70,7 @@ exports.getBackgroundImage = (scale, backIndex, palIndex) ->
   Buttons
 ###
 createButton = (scale, palIndex, colIndex, width, height) ->
-  console.log 'createButton %d %d %d %d %d', scale, palIndex, colIndex, width, height
+  #console.log 'createButton %d %d %d %d %d', scale, palIndex, colIndex, width, height
   # obtain the game data from X-COM
   palette = window.XCOM.PALETTES[palIndex]
   # create a canvas element to hold the image data
@@ -110,7 +110,7 @@ exports.getButton = (scale, palIndex, colIndex, width, height) ->
   Large Glyphs
 ###
 createLargeGlyph = (scale, palIndex, colIndex, glyphIndex) ->
-  console.log 'createLargeGlyph %d %d %d %d', scale, palIndex, colIndex, glyphIndex
+  #console.log 'createLargeGlyph %d %d %d %d', scale, palIndex, colIndex, glyphIndex
   # obtain the game data from X-COM
   palette = window.XCOM.PALETTES[palIndex]
   biglets = window.XCOM.BIGLETS[glyphIndex]
@@ -141,7 +141,7 @@ exports.getLargeGlyph = (scale, palIndex, colIndex, glyphIndex) ->
   Small Glyphs
 ###
 createSmallGlyph = (scale, palIndex, colIndex, glyphIndex) ->
-  console.log 'createSmallGlyph %d %d %d %d', scale, palIndex, colIndex, glyphIndex
+  #console.log 'createSmallGlyph %d %d %d %d', scale, palIndex, colIndex, glyphIndex
   # obtain the game data from X-COM
   palette = window.XCOM.PALETTES[palIndex]
   smallset = window.XCOM.SMALLSET[glyphIndex]
@@ -172,7 +172,7 @@ exports.getSmallGlyph = (scale, palIndex, colIndex, glyphIndex) ->
   Window Border
 ###
 createWindowBorder = (scale, palIndex, colIndex, width, height) ->
-  console.log 'createWindowBorder %d %d %d %d %d', scale, palIndex, colIndex, width, height
+  #console.log 'createWindowBorder %d %d %d %d %d', scale, palIndex, colIndex, width, height
   # obtain the game data from X-COM
   palette = window.XCOM.PALETTES[palIndex]
   # create a canvas element to hold the image data

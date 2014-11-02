@@ -27,6 +27,17 @@ The following sequence will build and run the game in Firefox.
     cake rebuild
     cake run
 
+## Hacking
+Want to hack around on the code?
+
+`doc/notes.md` has some of my observations about X-COM: UFO Defense. It
+describes what I saw, and thus what I am attempting to re-create.
+
+`doc/dev.md` describes the high level points of the xcomjs codebase. If
+I were tutoring someone on the code, those are the points that I would
+go over with them. Reading this document is probably the best way to get
+a feel for the moving parts of the codebase.
+
 ## Thanks
 I wrote xcomjs, but drew heavily upon the reference material found at
 [UFOpaedia.org](http://ufopaedia.org/). Truly, my code stands upon the

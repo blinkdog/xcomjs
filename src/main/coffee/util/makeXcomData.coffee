@@ -43,6 +43,12 @@ exports.run = (xcomPath, dataPath) ->
   dataOut = fs.createWriteStream dataPath
   dataOut.write JSON.stringify XCOMDATA, null, 2
   dataOut.end()
+  # compress the json file
+# PMM: We aren't doing this yet, but it might be useful later.
+#  gzip = require('zlib').createGzip()
+#  inp = fs.createReadStream dataPath
+#  out = fs.createWriteStream dataPath + '.gz'
+#  inp.pipe(gzip).pipe out
 
 #----------------------------------------------------------------------------
 # end of makeXcomData.coffee

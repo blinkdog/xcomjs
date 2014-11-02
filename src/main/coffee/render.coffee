@@ -33,7 +33,7 @@ exports.drawGraphic = (canvas, graphic, x1, y1) ->
   context.drawImage graphic,
     canvas.ox+x1*canvas.scale, canvas.oy+y1*canvas.scale
 
-exports.drawText = (canvas, xcomFont, text, x1, y1) ->
+exports.drawText = drawText = (canvas, xcomFont, text, x1, y1) ->
   context = canvas.getContext("2d")
   for char in text
     if char is ' '
@@ -44,6 +44,11 @@ exports.drawText = (canvas, xcomFont, text, x1, y1) ->
       context.drawImage fontObj.glyph,
         canvas.ox+x1*canvas.scale, canvas.oy+y1*canvas.scale
       x1 = x1 + fontObj.width
+
+exports.drawCenterText = (canvas, font, text, y1) ->
+  width = font.measure text
+  x1 = Math.floor((320 - width) / 2) + 1
+  drawText canvas, font, text, x1, y1
 
 #----------------------------------------------------------------------------
 # end of render.coffee

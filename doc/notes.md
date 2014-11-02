@@ -83,3 +83,19 @@ shades:
 
 These shades seem to correspond to the GeoScape palette (full palette 0),
 indexes 134-138 (inclusive).
+
+### Spacing
+Small characters seem to overwrite the shadow the previous character.
+Large characters seem to use the full shadow of the character.
+So, when measuring glyphs, we take one pixel away from the width of
+small characters. That way they can be drawn the way X-COM draws them.
+
+There are two special cases. First, in small fonts, the uppercase 'L'
+character is drawn as if it were one pixel narrower. That is, a
+character following an 'L' doesn't just overwrite the shadow/shading
+pixels, it actually draws upon the L itself.
+
+Second, X-COM does not provide a space character. The small characters
+appear to treat a space as a fully transparent character of width 5.
+The large characters appear to treat a space as a fully transparent
+character with a width of 11.
