@@ -133,12 +133,12 @@ exports.getLargeFont = (scale, palIndex, colIndex) ->
 ###
   Small Fonts
 ###
-createSmallFont = (scale, palIndex, colIndex) ->
+createSmallFont = (scale, palIndex, colIndex, pressed) ->
   #console.log 'createSmallFont %d %d %d %d', scale, palIndex, colIndex
   result = []
   # create all the glyphs in the font
   for i in [0...window.XCOM.SMALLSET.length]
-    glyph = gfx.getSmallGlyph scale, palIndex, colIndex, i
+    glyph = gfx.getSmallGlyph scale, palIndex, colIndex, i, pressed
     width = measureGlyph(window.XCOM.SMALLSET[i])-1
     encodes = SMALLSET_ENCODING.charAt i
     if encodes is 'L'
@@ -153,13 +153,13 @@ createSmallFont = (scale, palIndex, colIndex) ->
   result.measure = measureSmall
   return result
 
-createSmallFontHash = (scale, palIndex, colIndex) ->
-  "#{scale},#{palIndex},#{colIndex}"
+createSmallFontHash = (scale, palIndex, colIndex, pressed) ->
+  "#{scale},#{palIndex},#{colIndex},#{pressed}"
 
 createSmallFontMemo = _.memoize createSmallFont, createSmallFontHash
 
-exports.getSmallFont = (scale, palIndex, colIndex) ->
-  createSmallFontMemo scale, palIndex, colIndex
+exports.getSmallFont = (scale, palIndex, colIndex, pressed) ->
+  createSmallFontMemo scale, palIndex, colIndex, pressed
 
 #----------------------------------------------------------------------------
 # end of font.coffee

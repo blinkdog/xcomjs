@@ -69,10 +69,14 @@ exports.getBackgroundImage = (scale, backIndex, palIndex) ->
 ###
   Buttons
 ###
-createButton = (scale, palIndex, colIndex, width, height) ->
-  #console.log 'createButton %d %d %d %d %d', scale, palIndex, colIndex, width, height
+createButton = (scale, palIndex, colIndex, width, height, pressed) ->
+  #console.log 'createButton %d %d %d %d %d %d', scale, palIndex, colIndex, width, height, pressed
   # obtain the game data from X-COM
   palette = window.XCOM.PALETTES[palIndex]
+  if pressed
+    buttonPal = (palette[colIndex+4-i] for i in [0..4])
+  else
+    buttonPal = (palette[colIndex+i] for i in [0..4])
   # create a canvas element to hold the image data
   canvas = document.createElement 'canvas'
   canvas.width = width*scale
@@ -81,30 +85,30 @@ createButton = (scale, palIndex, colIndex, width, height) ->
   pixels = context.getImageData 0, 0, canvas.width, canvas.height
   # draw the button
   for x in [0...width]
-    putScaledPixel scale, pixels, x, 0, palette[colIndex]
-    putScaledPixel scale, pixels, x, height-1, palette[colIndex+4]
+    putScaledPixel scale, pixels, x, 0, buttonPal[0]
+    putScaledPixel scale, pixels, x, height-1, buttonPal[4]
   for y in [0...height]
-    putScaledPixel scale, pixels, 0, y, palette[colIndex]
-    putScaledPixel scale, pixels, width-1, y, palette[colIndex+4]
+    putScaledPixel scale, pixels, 0, y, buttonPal[0]
+    putScaledPixel scale, pixels, width-1, y, buttonPal[4]
   for x in [1...width-1]
-    putScaledPixel scale, pixels, x, 1, palette[colIndex+1]
-    putScaledPixel scale, pixels, x, height-2, palette[colIndex+3]
+    putScaledPixel scale, pixels, x, 1, buttonPal[1]
+    putScaledPixel scale, pixels, x, height-2, buttonPal[3]
   for y in [1...height-1]
-    putScaledPixel scale, pixels, 1, y, palette[colIndex+1]
-    putScaledPixel scale, pixels, width-2, y, palette[colIndex+3]
+    putScaledPixel scale, pixels, 1, y, buttonPal[1]
+    putScaledPixel scale, pixels, width-2, y, buttonPal[3]
   for y in [2...height-2]
     for x in [2...width-2]
-      putScaledPixel scale, pixels, x, y, palette[colIndex+2]
+      putScaledPixel scale, pixels, x, y, buttonPal[2]
   context.putImageData pixels, 0, 0
   return canvas
 
-createButtonHash = (scale, palIndex, colIndex, width, height) ->
-  "#{scale},#{palIndex},#{colIndex},#{width},#{height}"
+createButtonHash = (scale, palIndex, colIndex, width, height, pressed) ->
+  "#{scale},#{palIndex},#{colIndex},#{width},#{height},#{pressed}"
 
 createButtonMemo = _.memoize createButton, createButtonHash
 
-exports.getButton = (scale, palIndex, colIndex, width, height) ->
-  createButtonMemo scale, palIndex, colIndex, width, height
+exports.getButton = (scale, palIndex, colIndex, width, height, pressed) ->
+  createButtonMemo scale, palIndex, colIndex, width, height, pressed
 
 ###
   Large Glyphs
@@ -140,10 +144,14 @@ exports.getLargeGlyph = (scale, palIndex, colIndex, glyphIndex) ->
 ###
   Small Glyphs
 ###
-createSmallGlyph = (scale, palIndex, colIndex, glyphIndex) ->
-  #console.log 'createSmallGlyph %d %d %d %d', scale, palIndex, colIndex, glyphIndex
+createSmallGlyph = (scale, palIndex, colIndex, glyphIndex, pressed) ->
+  #console.log 'createSmallGlyph %d %d %d %d %d', scale, palIndex, colIndex, glyphIndex, pressed
   # obtain the game data from X-COM
   palette = window.XCOM.PALETTES[palIndex]
+  if pressed
+    buttonPal = (palette[colIndex+4-i] for i in [0..4])
+  else
+    buttonPal = (palette[colIndex+i] for i in [0..4])
   smallset = window.XCOM.SMALLSET[glyphIndex]
   # create a canvas element to hold the image data
   canvas = document.createElement 'canvas'
@@ -155,18 +163,18 @@ createSmallGlyph = (scale, palIndex, colIndex, glyphIndex) ->
   for y in [0...GLYPH_SIZE.SMALL.HEIGHT]
     for x in [0...GLYPH_SIZE.SMALL.WIDTH]
       if smallset[y][x] isnt 0
-        palIndex = colIndex + smallset[y][x] - 1
-        putScaledPixel scale, pixels, x, y, palette[palIndex]
+        palIndex = smallset[y][x] - 1
+        putScaledPixel scale, pixels, x, y, buttonPal[palIndex]
   context.putImageData pixels, 0, 0
   return canvas
 
-createSmallGlyphHash = (scale, palIndex, colIndex, glyphIndex) ->
-  "#{scale},#{palIndex},#{colIndex},#{glyphIndex}"
+createSmallGlyphHash = (scale, palIndex, colIndex, glyphIndex, pressed) ->
+  "#{scale},#{palIndex},#{colIndex},#{glyphIndex},#{pressed}"
 
 createSmallGlyphMemo = _.memoize createSmallGlyph, createSmallGlyphHash
 
-exports.getSmallGlyph = (scale, palIndex, colIndex, glyphIndex) ->
-  createSmallGlyphMemo scale, palIndex, colIndex, glyphIndex
+exports.getSmallGlyph = (scale, palIndex, colIndex, glyphIndex, pressed) ->
+  createSmallGlyphMemo scale, palIndex, colIndex, glyphIndex, pressed
 
 ###
   Window Border

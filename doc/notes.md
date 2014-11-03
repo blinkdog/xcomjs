@@ -99,3 +99,17 @@ Second, X-COM does not provide a space character. The small characters
 appear to treat a space as a fully transparent character of width 5.
 The large characters appear to treat a space as a fully transparent
 character with a width of 11.
+
+## Interactives
+Buttons and fonts seem to reverse their color schemes when pushed.
+It uses the same palette indexes, it's just that they're computed
+from dark-to-light instead of light-to-dark.
+
+55555555555555555551
+54444444444444444421
+54333333333333333321
+54333333333333333321
+54333333333333333321
+54333333333333333321
+54222222222222222221
+51111111111111111111
