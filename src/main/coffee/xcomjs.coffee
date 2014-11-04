@@ -20,6 +20,8 @@ font = require './font'
 gfx = require './gfx'
 render = require './render'
 
+{activity} = require './activity/selectLanguage'
+
 resize = ->
   # determine how large the window is
   { innerHeight, innerWidth } = window
@@ -45,6 +47,12 @@ installShimJQ = ->
     alert "Unknown selector #{selector}"
 
 drawAnimationFrame = (timestamp) ->
+  # update the game and potentially change the activity
+  newActivity = activity.update Date.now()
+  if newActivity.name isnt activity.name
+    activity.leave()
+    newActivity.enter()
+    activity = newActivity
   # do some frame and timing bookkeeping
   if window.DEBUG_OVERLAY?
     deltaTime = Math.floor(timestamp - window.DEBUG_OVERLAY.lastTime)
@@ -53,72 +61,32 @@ drawAnimationFrame = (timestamp) ->
     window.DEBUG_OVERLAY.fpsTime += deltaTime
     if window.DEBUG_OVERLAY.fpsTime >= 1000
       window.DEBUG_OVERLAY.lastFps = window.DEBUG_OVERLAY.fpsCount
-      window.DEBUG_OVERLAY.fpsTime -= 1000
+      window.DEBUG_OVERLAY.fpsTime %= 1000
       window.DEBUG_OVERLAY.fpsCount = 0
-  # if we clicked somewhere important
-  pushed0 = false
-  pushed1 = false
-  pushed2 = false
-  if window.DEBUG_OVERLAY.xDownX?
-    mx = window.DEBUG_OVERLAY.xDownX
-    my = window.DEBUG_OVERLAY.xDownY
-    if mx >= 64 and mx <= 256
-      pushed0 = true if my >= 90 and my <= 110
-      pushed1 = true if my >= 118 and my <= 138
-      pushed2 = true if my >= 146 and my <= 166
-  # clear the canvas to black
-  render.clearCanvas canvas
-  # draw the window background
-  background = gfx.getBackgroundImage canvas.scale, 0, 0
-  render.drawBackground canvas, background, 32, 20, 256, 160
-  # draw the window border
-  windowBorder = gfx.getWindowBorder canvas.scale, 0, 134, 256, 160
-  render.drawGraphic canvas, windowBorder, 32, 20
-  # draw the language selection buttons
-  button = gfx.getButton canvas.scale, 0, 134, 192, 20
-  pushedButton = gfx.getButton canvas.scale, 0, 134, 192, 20, true
-  if pushed0
-    render.drawGraphic canvas, pushedButton, 64, 90
-  else
-    render.drawGraphic canvas, button, 64, 90
-  if pushed1
-    render.drawGraphic canvas, pushedButton, 64, 118
-  else
-    render.drawGraphic canvas, button, 64, 118
-  if pushed2
-    render.drawGraphic canvas, pushedButton, 64, 146
-  else
-    render.drawGraphic canvas, button, 64, 146
-  # draw the labels on the buttons
-  buttonFont = font.getSmallFont canvas.scale, 0, 134
-  pushedButtonFont = font.getSmallFont canvas.scale, 0, 134, true
-  if pushed0
-    render.drawCenterText canvas, pushedButtonFont, "ENGLISH", 96
-  else
-    render.drawCenterText canvas, buttonFont, "ENGLISH", 96
-  if pushed1
-    render.drawCenterText canvas, pushedButtonFont, "DEUTSCHE", 124
-  else
-    render.drawCenterText canvas, buttonFont, "DEUTSCHE", 124
-  if pushed2
-    render.drawCenterText canvas, pushedButtonFont, "FRANCAIS", 152
-  else
-    render.drawCenterText canvas, buttonFont, "FRANCAIS", 152
+  # render the activity
+  canvas = $("#canvas")[0]
+  activity.render timestamp, canvas
   # render the DEBUG_OVERLAY
   if window.DEBUG_OVERLAY?
-    {xcomX, xcomY, lastFps, xDownX, xDownY} = window.DEBUG_OVERLAY
+    {xcomX, xcomY, lastFps, xDown} = window.DEBUG_OVERLAY
     displayText = "FPS:#{('000'+lastFps).substr(-3)} "
     displayText += "X:#{('000'+xcomX).substr(-3)} "
     displayText += "Y:#{('000'+xcomY).substr(-3)} "
-    if window.DEBUG_OVERLAY.xDownX?
-      displayText += "MX:#{('000'+xDownX).substr(-3)} "
-      displayText += "MY:#{('000'+xDownY).substr(-3)} "
+    if window.DEBUG_OVERLAY.xDown[0]?
+      displayText += "LX:#{('000'+xDown[0][0]).substr(-3)} "
+      displayText += "LY:#{('000'+xDown[0][1]).substr(-3)} "
+    if window.DEBUG_OVERLAY.xDown[1]?
+      displayText += "MX:#{('000'+xDown[1][0]).substr(-3)} "
+      displayText += "MY:#{('000'+xDown[1][1]).substr(-3)} "
+    if window.DEBUG_OVERLAY.xDown[2]?
+      displayText += "RX:#{('000'+xDown[2][0]).substr(-3)} "
+      displayText += "RY:#{('000'+xDown[2][1]).substr(-3)} "
     displayText = displayText.trim()
     buttonFont = font.getSmallFont canvas.scale, 0, 134
     background = gfx.getBackgroundImage canvas.scale, 0, 0
     render.drawBackground canvas, background, 0, 0, 320, 9
     render.drawText canvas, buttonFont, displayText, 0, 0
-  # draw another animation frame when it is time
+  # request another animation frame when it is time
   requestAnimationFrame drawAnimationFrame
 
 exports.run = ->
@@ -141,37 +109,35 @@ exports.run = ->
     mouseY: 0
     xcomX: 0
     xcomY: 0
-  # let's draw a language selection screen to show that we can do it
+    xDown: []
+
+  # add our event handlers to the main canvas
   canvas = $("#canvas")[0]
+  
+  # prevent browser from showing right-click menu
+  canvas.oncontextmenu = -> false
+  
+  # update when the user moves the mouse
   canvas.addEventListener 'mousemove', (e) ->
-    window.DEBUG_OVERLAY ?= {}
-    window.DEBUG_OVERLAY.mouseX = e.clientX
-    window.DEBUG_OVERLAY.mouseY = e.clientY
     xcomX = Math.floor (e.clientX - canvas.ox) / canvas.scale
     xcomY = Math.floor (e.clientY - canvas.oy) / canvas.scale
-    xcomX = Math.max 0, xcomX
-    xcomY = Math.max 0, xcomY
-    xcomX = Math.min xcomX, 319
-    xcomY = Math.min xcomY, 199
     window.DEBUG_OVERLAY.xcomX = xcomX
     window.DEBUG_OVERLAY.xcomY = xcomY
+
+  # update when the user pushes a mouse button
   canvas.addEventListener 'mousedown', (e) ->
-    window.DEBUG_OVERLAY ?= {}
-    window.DEBUG_OVERLAY.downX = e.clientX
-    window.DEBUG_OVERLAY.downY = e.clientY
     xcomX = Math.floor (e.clientX - canvas.ox) / canvas.scale
     xcomY = Math.floor (e.clientY - canvas.oy) / canvas.scale
-    xcomX = Math.max 0, xcomX
-    xcomY = Math.max 0, xcomY
-    xcomX = Math.min xcomX, 319
-    xcomY = Math.min xcomY, 199
-    window.DEBUG_OVERLAY.xDownX = xcomX
-    window.DEBUG_OVERLAY.xDownY = xcomY
+    if xcomX >= 0 and xcomX <= 319 and xcomY >= 0 and xcomY <= 199
+      e.xcomX = xcomX
+      e.xcomY = xcomY
+      activity.mousedown e
+      window.DEBUG_OVERLAY.xDown[e.button] = [xcomX, xcomY]
+  
+  # update when the user releases a mouse button
   canvas.addEventListener 'mouseup', (e) ->
-    delete window.DEBUG_OVERLAY.downX
-    delete window.DEBUG_OVERLAY.downY
-    delete window.DEBUG_OVERLAY.xDownX
-    delete window.DEBUG_OVERLAY.xDownY
+    activity.mouseup e
+    window.DEBUG_OVERLAY.xDown[e.button] = undefined
   
   # ask the browser to render the display
   requestAnimationFrame drawAnimationFrame

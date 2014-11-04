@@ -1,12 +1,9 @@
 # TODO
-* [X] Added button push graphics
-* [X] Added inverse font graphics
-* [X] Added event handler for mouse movement
-* [X] Added event handler for mouse clicks
-* [X] Added requestAnimationFrame rendering loop
-* [ ] Disable right-click menu when clicking canvas
-* [ ] Implement a main game loop
-* [ ] Implement the language select screen
+* [X] Disable right-click menu when clicking canvas
+* [X] Create an activity structure
+* [X] Implement the language select screen as an activity
+* [ ] Create UI buttons, not just graphical buttons
+* [ ] Implement the language select screen in terms of UI buttons
 * [ ] Improve the installation / X-COM data creation process
 
 ## Ideas

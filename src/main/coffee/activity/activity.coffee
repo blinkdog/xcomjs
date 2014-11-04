@@ -1,4 +1,4 @@
-# constant.coffee
+# activity.coffee
 # Copyright 2014 Patrick Meade.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -15,23 +15,37 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #----------------------------------------------------------------------------
 
-exports.MOUSE_BUTTON_LEFT = 0
+###
+  This file intended to serve as a template for activities.
+###
 
-exports.MOUSE_BUTTON_MIDDLE = 1
+activity =
+  # the name of the activity
+  name: "ACTIVITY_NAME"
+  
+  # called before this activity begins
+  enter: ->
+  
+  # called after this activity is finished
+  leave: ->
+  
+  # called when the user presses a mouse button
+  mousedown: (e) ->
+  
+  # called when the user moves the mouse
+  mousemove: (e) ->
+  
+  # called when the user releases a mouse button
+  mouseup: (e) ->
+  
+  # called by the game engine to draw the display
+  render: (timestamp, canvas) ->
+  
+  # called by the game engine to update logic/state
+  update: (timestamp) -> this
 
-exports.MOUSE_BUTTON_RIGHT = 2
-
-exports.GLYPH_SIZE =
-  LARGE:
-    WIDTH: 16
-    HEIGHT: 16
-  SMALL:
-    WIDTH: 8
-    HEIGHT: 9
-
-exports.XCOM_SIZE =
-  WIDTH: 320
-  HEIGHT: 200
+# export this activity to others
+exports.activity = activity
 
 #----------------------------------------------------------------------------
-# end of constant.coffee
+# end of activity.coffee
