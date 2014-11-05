@@ -85,3 +85,38 @@ In addition, the array itself has several properties annotated upon it:
     "spaceWidth": # the width of an empty space ' '
     "measure": # function to measure the width (X-COM coordinates) of the
                # provided string. for example: font.measure("UFO Defense")
+
+## activity
+An activity is a take on the Android idea of an activity. A single purpose
+screen that allows viewing/modifying some part of the application state. By
+passing from activity to activity the user (player) can use the application
+(play the game).
+
+In xcomjs, activity is defined by the following structure:
+
+    activity =
+      name: "ACTIVITY_NAME"          # the name of the activity
+      enter: ->                      # called before this activity begins
+      leave: ->                      # called after this activity is finished
+      mousedown: (e) ->              # called when the user presses a mouse button
+      mousemove: (e) ->              # called when the user moves the mouse
+      mouseup: (e) ->                # called when the user releases a mouse button
+      render: (timestamp, canvas) -> # called by the game engine to draw the display
+      update: (timestamp) -> this    # called by the game engine to update logic/state
+
+### activity.update
+This function is a little special, in that the return object is used as
+the next activity object. Most of the time, the activity will return itself
+(i.e.: this) as the next activity to be used. If the user is ready to
+transition to another activity, the `update()` method should return that
+instead.
+
+The `timestamp` parameter is simply the game engine passing `Date.now()`.
+
+### activity.render
+The `timestamp` parameter is the timestamp passed to the callback provided
+to the browser for `requestAnimationFrame`.
+
+## gui
+This subdirectory contains User Interface components. Right now, Button is
+the only class, but provides convenient button behavior.

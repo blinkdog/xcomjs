@@ -15,13 +15,23 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #----------------------------------------------------------------------------
 
-{MOUSE_BUTTON_LEFT} = require '../constant'
+{COLOR_GREEN} = require '../constant'
 
-font = require '../font'
 gfx = require '../gfx'
 renderer = require '../render'
 
-pushed = [false, false, false]
+{Button} = require '../gui/button'
+
+lastScale = 0
+englishButton = null
+germanButton = null
+frenchButton = null
+
+createGui = (canvas) ->
+  englishButton = new Button canvas, COLOR_GREEN, 192, 20, 64, 90, 'ENGLISH', -> alert 'ENGLISH'
+  germanButton = new Button canvas, COLOR_GREEN, 192, 20, 64, 118, 'DEUTSCHE', -> alert 'DEUTSCHE'
+  frenchButton = new Button canvas, COLOR_GREEN, 192, 20, 64, 146, 'FRANCAIS', -> alert 'FRANCAIS'
+  lastScale = canvas.scale
 
 activity =
   name: "Select Language"
@@ -31,22 +41,23 @@ activity =
   leave: ->
 
   mousedown: (e) ->
-    if e.button is MOUSE_BUTTON_LEFT
-      if e.xcomX? and e.xcomY?
-        mx = e.xcomX
-        my = e.xcomY
-        if mx >= 64 and mx <= 256
-          pushed[0] = true if my >= 90 and my <= 110
-          pushed[1] = true if my >= 118 and my <= 138
-          pushed[2] = true if my >= 146 and my <= 166
+    englishButton?.mousedown e
+    germanButton?.mousedown e
+    frenchButton?.mousedown e
   
   mousemove: (e) ->
 
   mouseup: (e) ->
-    if e.button is MOUSE_BUTTON_LEFT
-      pushed[i] = false for i in [0..2]
+    englishButton?.mouseup e
+    germanButton?.mouseup e
+    frenchButton?.mouseup e
 
   render: (timestamp, canvas) ->
+    # create the GUI resources, if we need them
+    createGui canvas if canvas.scale isnt lastScale
+    createGui canvas if not englishButton?
+    createGui canvas if not germanButton?
+    createGui canvas if not frenchButton?
     # clear the canvas to black
     renderer.clearCanvas canvas
     # draw the window background
@@ -56,35 +67,9 @@ activity =
     windowBorder = gfx.getWindowBorder canvas.scale, 0, 134, 256, 160
     renderer.drawGraphic canvas, windowBorder, 32, 20
     # draw the language selection buttons
-    button = gfx.getButton canvas.scale, 0, 134, 192, 20
-    pushedButton = gfx.getButton canvas.scale, 0, 134, 192, 20, true
-    if pushed[0]
-      renderer.drawGraphic canvas, pushedButton, 64, 90
-    else
-      renderer.drawGraphic canvas, button, 64, 90
-    if pushed[1]
-      renderer.drawGraphic canvas, pushedButton, 64, 118
-    else
-      renderer.drawGraphic canvas, button, 64, 118
-    if pushed[2]
-      renderer.drawGraphic canvas, pushedButton, 64, 146
-    else
-      renderer.drawGraphic canvas, button, 64, 146
-    # draw the labels on the buttons
-    buttonFont = font.getSmallFont canvas.scale, 0, 134
-    pushedButtonFont = font.getSmallFont canvas.scale, 0, 134, true
-    if pushed[0]
-      renderer.drawCenterText canvas, pushedButtonFont, "ENGLISH", 96
-    else
-      renderer.drawCenterText canvas, buttonFont, "ENGLISH", 96
-    if pushed[1]
-      renderer.drawCenterText canvas, pushedButtonFont, "DEUTSCHE", 124
-    else
-      renderer.drawCenterText canvas, buttonFont, "DEUTSCHE", 124
-    if pushed[2]
-      renderer.drawCenterText canvas, pushedButtonFont, "FRANCAIS", 152
-    else
-      renderer.drawCenterText canvas, buttonFont, "FRANCAIS", 152
+    englishButton.render canvas
+    germanButton.render canvas
+    frenchButton.render canvas
   
   update: (timestamp) -> this
 

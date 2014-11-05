@@ -2,7 +2,7 @@
 X-COM: Browser Defense
 
 ## IMPORTANT
-This project requires a copy of UFO: Enemy Unknown or X-COM: UFO Defense.
+This project requires a copy of UFO: Enemy Unknown or X-COM: UFO Defense.<br/>
 That is, a copy of the original X-COM, released by Microprose in 1994.
 
 ### Sources
