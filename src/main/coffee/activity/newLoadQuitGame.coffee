@@ -1,4 +1,4 @@
-# selectLanguage.coffee
+# newLoadQuitGame.coffee
 # Copyright 2014 Patrick Meade.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -15,45 +15,47 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #----------------------------------------------------------------------------
 
+NEW_GAME_LABEL_ID = 780
+LOAD_SAVED_GAME_LABEL_ID = 781
+QUIT_LABEL_ID = 801
+
 {COLOR_GREEN} = require '../constant'
 
 gfx = require '../gfx'
 renderer = require '../render'
-xcom = require '../xcom'
+{getGeoscapeText} = require '../text'
 
 {Button} = require '../gui/button'
 
-newLoadQuitGameActivity = require('./newLoadQuitGame').activity
+selectDifficultyActivity = require('./selectDifficulty').activity
+loadGameActivity = require('./loadSavedGame').activity
 
 lastScale = 0
-englishButton = null
-germanButton = null
-frenchButton = null
+newGameButton = null
+loadSavedGameButton = null
+quitButton = null
 nextActivity = null
 
 createGui = (canvas) ->
-  englishButton = new Button canvas, COLOR_GREEN, 192, 20, 64, 90, 'ENGLISH', ->
-    window.APP =
-      language: 'ENGLISH'
-      strings: [xcom.ENGLISH, xcom.ENGLISH2]
-    nextActivity = newLoadQuitGameActivity
+  newGameLabel = getGeoscapeText NEW_GAME_LABEL_ID
+  newGameButton = new Button canvas, COLOR_GREEN, 192, 20, 64, 90, newGameLabel, ->
+    alert 'Select Difficulty'
+    nextActivity = selectDifficultyActivity
 
-  germanButton = new Button canvas, COLOR_GREEN, 192, 20, 64, 118, 'DEUTSCHE', ->
-    window.APP =
-      language: 'DEUTSCHE'
-      strings: [xcom.GERMAN, xcom.GERMAN2]
-    nextActivity = newLoadQuitGameActivity
+  loadSavedGameLabel = getGeoscapeText LOAD_SAVED_GAME_LABEL_ID
+  loadSavedGameButton = new Button canvas, COLOR_GREEN, 192, 20, 64, 118, loadSavedGameLabel, ->
+    alert 'Select Game To Load'
+    nextActivity = loadGameActivity
 
-  frenchButton = new Button canvas, COLOR_GREEN, 192, 20, 64, 146, 'FRANCAIS', ->
-    window.APP =
-      language: 'FRANCAIS'
-      strings: [xcom.FRENCH, xcom.FRENCH2]
-    nextActivity = newLoadQuitGameActivity
+  quitLabel = getGeoscapeText QUIT_LABEL_ID
+  quitButton = new Button canvas, COLOR_GREEN, 192, 20, 64, 146, quitLabel, ->
+    alert 'Quit'
+    nextActivity = null
 
   lastScale = canvas.scale
 
 activity =
-  name: "Select Language"
+  name: "New/Load/Quit Game"
   
   enter: ->
     # by default, this will be the next activity
@@ -62,23 +64,23 @@ activity =
   leave: ->
 
   mousedown: (e) ->
-    englishButton?.mousedown e
-    germanButton?.mousedown e
-    frenchButton?.mousedown e
+    newGameButton?.mousedown e
+    loadSavedGameButton?.mousedown e
+    quitButton?.mousedown e
   
   mousemove: (e) ->
 
   mouseup: (e) ->
-    englishButton?.mouseup e
-    germanButton?.mouseup e
-    frenchButton?.mouseup e
+    newGameButton?.mouseup e
+    loadSavedGameButton?.mouseup e
+    quitButton?.mouseup e
 
   render: (timestamp, canvas) ->
     # create the GUI resources, if we need them
     createGui canvas if canvas.scale isnt lastScale
-    createGui canvas if not englishButton?
-    createGui canvas if not germanButton?
-    createGui canvas if not frenchButton?
+    createGui canvas if not newGameButton?
+    createGui canvas if not loadSavedGameButton?
+    createGui canvas if not quitButton?
     # clear the canvas to black
     renderer.clearCanvas canvas
     # draw the window background
@@ -88,9 +90,9 @@ activity =
     windowBorder = gfx.getWindowBorder canvas.scale, 0, 134, 256, 160
     renderer.drawGraphic canvas, windowBorder, 32, 20
     # draw the language selection buttons
-    englishButton.render canvas
-    germanButton.render canvas
-    frenchButton.render canvas
+    newGameButton.render canvas
+    loadSavedGameButton.render canvas
+    quitButton.render canvas
   
   update: (timestamp) -> nextActivity
 
@@ -98,4 +100,4 @@ activity =
 exports.activity = activity
 
 #----------------------------------------------------------------------------
-# end of selectLanguage.coffee
+# end of newLoadQuitGame.coffee

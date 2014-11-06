@@ -5,6 +5,27 @@ unrecognizable pile of CoffeeScript?)
 ## window
 Some things attached to the global `window` object.
 
+### window.APP
+`window.APP` contains application-wide settings. Some of them are described
+here.
+
+### window.APP.language
+Set by the "Select Language" activity. Valid values are:
+
+    ENGLISH
+    DEUTSCHE
+    FRANCAIS
+
+### window.APP.strings = []
+Set by the "Select Language" activity. Language independent access to
+the strings of the game.
+
+    [0]: ENGLISH.DAT, FRENCH.DAT, or GERMAN.DAT strings
+    [1]: ENGLISH2.DAT, FRENCH2.DAT, or GERMAN2.DAT strings
+
+Activities should use the functions provided by text.coffee rather
+than access these global arrays directly.
+
 ### window.DATA
 `window.DATA` is `data.json` loaded into a variable. `data.json` contains
 the binary data from X-COM: UFO Defense in base64 encoded strings. This is
@@ -85,6 +106,9 @@ In addition, the array itself has several properties annotated upon it:
     "spaceWidth": # the width of an empty space ' '
     "measure": # function to measure the width (X-COM coordinates) of the
                # provided string. for example: font.measure("UFO Defense")
+
+## text.coffee
+Provides two functions to obtain game text in a language independent way.
 
 ## activity
 An activity is a take on the Android idea of an activity. A single purpose

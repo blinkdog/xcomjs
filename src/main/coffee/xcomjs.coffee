@@ -138,8 +138,10 @@ exports.run = ->
   canvas.addEventListener 'mouseup', (e) ->
     activity.mouseup e
     window.DEBUG_OVERLAY.xDown[e.button] = undefined
-  
-  # ask the browser to render the display
+
+  # prime the activity before we get started
+  activity.enter()
+  # ask the browser to render the display (i.e.: play the game)
   requestAnimationFrame drawAnimationFrame
 
 #----------------------------------------------------------------------------
