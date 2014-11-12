@@ -1,4 +1,4 @@
-# constant.coffee
+# selectSiteForNewBase.coffee
 # Copyright 2014 Patrick Meade.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -15,37 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #----------------------------------------------------------------------------
 
-exports.COLOR_GREEN = [0, 134]        # Palette 0, Index 134
-exports.COLOR_YELLOW = [0, 139]       # Palette 0, Index 139
-
-exports.DIFFICULTY_BEGINNER = 0
-exports.DIFFICULTY_EXPERIENCED = 1
-exports.DIFFICULTY_VETERAN = 2
-exports.DIFFICULTY_GENIUS = 3
-exports.DIFFICULTY_SUPERHUMAN = 4
-exports.DIFFICULTY_NIGHTMARE = 5
-
-exports.GLYPH_SIZE =
-  LARGE:
-    WIDTH: 16
-    HEIGHT: 16
-  SMALL:
-    WIDTH: 8
-    HEIGHT: 9
-
-exports.MOUSE_BUTTON_LEFT = 0
-
-exports.MOUSE_BUTTON_MIDDLE = 1
-
-exports.MOUSE_BUTTON_RIGHT = 2
-
-exports.SAMPLE_BUTTON_PUSH = 0
-
-exports.SAMPLE_RATE = 11025
-
-exports.XCOM_SIZE =
-  WIDTH: 320
-  HEIGHT: 200
+# TODO: Implement 'selectSiteForNewBase'
+exports.activity = {}
 
 #----------------------------------------------------------------------------
-# end of constant.coffee
+# end of selectSiteForNewBase.coffee

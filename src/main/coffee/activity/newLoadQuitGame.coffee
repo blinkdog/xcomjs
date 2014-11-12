@@ -46,7 +46,6 @@ buttonPushSample = null
 createGui = (canvas) ->
   newGameLabel = getGeoscapeText NEW_GAME_LABEL_ID
   newGameButton = new Button canvas, COLOR_GREEN, 192, 20, 64, 90, newGameLabel, ->
-    alert 'Select Difficulty'
     nextActivity = selectDifficultyActivity
     sound.playSample buttonPushSample
 

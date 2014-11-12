@@ -176,3 +176,34 @@ the Unsigned 8-Bit 11025Hz PCM data. It begins at Offset 0x2C (Offset 44)
 in the WAVE data file and continues to the end of the file. The exact
 length of this data can be found in the 4 bytes (UInt32LE) just prior
 to the data, at Offset 0x28 (Offset 40).
+
+## Difficulty Selection Screen
+
+### Text Resources
+
+    window.XCOM.ENGLISH[782] = "Select Difficulty Level"
+    window.XCOM.ENGLISH[783] = "1> Beginner"
+    window.XCOM.ENGLISH[784] = "2> Experienced"
+    window.XCOM.ENGLISH[785] = "3> Veteran"
+    window.XCOM.ENGLISH[786] = "4> Genius"
+    window.XCOM.ENGLISH[787] = "5> Superhuman"
+
+### Graphical Layout
+
+The background (back palette 0) and window border (COLOR_GREEN), start
+at upper-left coordinates 64, 10 and have dimensions: 192, 180
+
+"Select Difficulty Level" is COLOR_YELLOW and starts at 112, 30. It is
+probably centered and can be rendered with drawCenterText.
+
+The buttons are COLOR_GREEN with COLOR_GREEN labels. There are five buttons
+with upper-left coordinates:
+
+    80,  55
+    80,  80
+    80, 105
+    80, 130
+    80, 155
+
+The buttons have dimensions: 160, 18. The labels are covered under
+Text Resources above.
