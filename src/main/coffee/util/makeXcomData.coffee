@@ -39,6 +39,10 @@ exports.run = (xcomPath, dataPath) ->
       SMALLSET: source xcomPath, 'GEODATA/SMALLSET.DAT'
     GEOGRAPH:
       BACK: (source xcomPath, "GEOGRAPH/BACK#{("0"+i).substr(-2)}.SCR" for i in [1..17])
+    SOUND:
+      SAMPLE: source xcomPath, 'SOUND/SAMPLE.CAT'
+      SAMPLE2: source xcomPath, 'SOUND/SAMPLE2.CAT'
+      SAMPLE3: source xcomPath, 'SOUND/SAMPLE3.CAT'
   # write the X-COM game data object to a json file
   dataOut = fs.createWriteStream dataPath
   dataOut.write JSON.stringify XCOMDATA, null, 2

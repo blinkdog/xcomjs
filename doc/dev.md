@@ -38,6 +38,30 @@ For example, strings used by the game are translated from the native
 [Code Page 437](https://en.wikipedia.org/wiki/Code_page_437) to UTF-8.
 Palette entries are translated from the native VGA (0-63) to HTML5 RGB (0-255).
 
+#### window.XCOM.SAMPLE
+This is a two dimensional array of sound samples from X-COM. The first
+array index indicates the source of the samples:
+
+    0 = Geoscape Sounds (from: SAMPLE.CAT)
+    1 = Battlescape Sounds (from: SAMPLE2.CAT)
+    2 = Intro Sounds (from: SAMPLE3.CAT)
+
+The second array index is the sample number. Details can be found on
+the [UFOpaedia](http://ufopaedia.org/index.php?title=SOUND) article.
+
+Each sample is represented by a sample object:
+
+    {
+        "offset": offset into the .CAT file
+        "length": length of the WAVE file
+        "header": buffer of header bytes before the WAVE file
+        "file": buffer containing the full WAVE file
+        "data": buffer containing only the raw sound data
+    }
+
+For our purposes, the `data` parameter contains what we need; the raw
+unsigned 8-bit PCM encoded data.
+
 ## canvas
 `ufo.html` provides a single canvas element `#canvas` upon which the game
 does all of its drawing.

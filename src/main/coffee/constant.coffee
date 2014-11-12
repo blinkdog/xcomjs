@@ -15,8 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #----------------------------------------------------------------------------
 
-# Palette 0, Index 134
-exports.COLOR_GREEN = [0, 134]
+exports.COLOR_GREEN = [0, 134]        # Palette 0, Index 134
+exports.COLOR_YELLOW = [0, 139]       # Palette 0, Index 139
 
 exports.GLYPH_SIZE =
   LARGE:
@@ -31,6 +31,10 @@ exports.MOUSE_BUTTON_LEFT = 0
 exports.MOUSE_BUTTON_MIDDLE = 1
 
 exports.MOUSE_BUTTON_RIGHT = 2
+
+exports.SAMPLE_BUTTON_PUSH = 0
+
+exports.SAMPLE_RATE = 11025
 
 exports.XCOM_SIZE =
   WIDTH: 320

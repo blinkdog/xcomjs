@@ -113,3 +113,66 @@ from dark-to-light instead of light-to-dark.
 54333333333333333321
 54222222222222222221
 51111111111111111111
+
+## Sounds
+[UFOpaedia](http://ufopaedia.org/index.php?title=SOUND) has an article
+on the sound samples from X-COM. I did a little additional reverse
+engineering and discovered the following:
+
+The .CAT files contain an offset/length table at the beginning of
+the file. Each entry has the following format:
+
+    Offset  4 bytes (UInt32LE)
+    Length  4 bytes (UInt32LE)
+
+Each entry in the table is thus 8 bytes long. So it is possible to
+calculate the length of the table by taking the first offset and
+dividing by 8. This gives the number of entries in the file.
+
+    File Index
+        Repeat (x Number-Of-Entries)
+            Offset  4 bytes (UInt32LE)
+            Length  4 bytes (UInt32LE)
+    File 0
+    File 1
+    ...
+    File N-1
+
+There is also some kind of header preceeding each file:
+
+    File i
+        Header
+            Header_Size  1 byte (UInt8LE)
+            Header_Byte  # bytes (as specified in the previous byte)
+        File Data
+            File_Bytes   (Length) bytes, as specified in the file index
+
+So each file contained within X-COM's .CAT files has two or three extra bytes
+pre-pended to the actual data files. All but one of the files contained
+in SAMPLE.CAT, SAMPLE2.CAT, and SAMPLE3.CAT are Microsoft WAVE files with
+the following format:
+
+    Encoding: Unsigned PCM  
+    Channels: 1 @ 8-bit    
+    Samplerate: 11025Hz
+
+UFOpaedia says SAMPLE2.CAT, File 1 (the second file in the .CAT) contains
+"garbage". However, the contents look suspiciously like a portion of a
+build script, with calls to Turbo Assembler and the Watcom C/C++ compiler:
+
+    del ufo2exe\ufo.exe
+    tasm /j.386p /w+ /ml /m /p /s /zi /d__WATCOMC__=900 apw_asm.s
+    tasm /j.386p /w+ /ml /m /p /s /zi /d__WATCOMC__=900 digit.asm
+    tasm /j.386p /w+ /ml /m /p /s /zi /d__WATCOMC__=900 timer32.s
+    wcc386 -ms -3r -d2 -oa sound.c
+    copy sound.obj ufo2exe
+    copy timer32.obj ufo2exe
+    copy digit.obj ufo2exe
+    copy apw_asm.obj ufo2exe
+    call mu
+
+The remaining files have a very simple RIFF/WAVE/fmt/data encoding of
+the Unsigned 8-Bit 11025Hz PCM data. It begins at Offset 0x2C (Offset 44)
+in the WAVE data file and continues to the end of the file. The exact
+length of this data can be found in the 4 bytes (UInt32LE) just prior
+to the data, at Offset 0x28 (Offset 40).

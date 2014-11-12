@@ -90,6 +90,10 @@ drawAnimationFrame = (timestamp) ->
   requestAnimationFrame drawAnimationFrame
 
 exports.run = ->
+  # extend Array
+  Array::random = ->
+    return null if not @length
+    return @[Math.floor Math.random() * @length]
   # shim jQuery if needed
   if not window.$
     installShimJQ()

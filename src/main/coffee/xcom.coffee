@@ -145,5 +145,42 @@ smallsetAt = (start) ->
 
 exports.SMALLSET = (smallsetAt SMALLSET_SIZE*i for i in [0...SMALLSET.length/SMALLSET_SIZE])
 
+###
+  SOUND/SAMPLE.CAT
+  SOUND/SAMPLE2.CAT
+  SOUND/SAMPLE3.CAT
+###
+SAMPLE = new Buffer window.DATA.SOUND.SAMPLE, 'base64'
+SAMPLE2 = new Buffer window.DATA.SOUND.SAMPLE2, 'base64'
+SAMPLE3 = new Buffer window.DATA.SOUND.SAMPLE3, 'base64'
+
+numSamples = (buffer) ->
+  # divide the offset of the first file by 8
+  # the result is the number of 8 byte table entries
+  # i.e.: the number of samples in the file
+  buffer.readUInt32LE(0) >> 3
+
+parseSample = (buffer, index) ->
+  offset = buffer.readUInt32LE i*8
+  length = buffer.readUInt32LE i*8+4
+  numHeaderBytes = buffer[offset]
+  header = buffer.slice offset, offset+numHeaderBytes+1
+  soundFile = buffer.slice offset+numHeaderBytes+1, offset+length+numHeaderBytes+1
+  soundData = soundFile.slice 0x2c
+  result =
+    offset: offset
+    length: length
+    header: header
+    file: soundFile
+    data: soundData
+
+SAMPLE = [
+  (parseSample SAMPLE, i for i in [0...numSamples SAMPLE])
+  (parseSample SAMPLE2, i for i in [0...numSamples SAMPLE2])
+  (parseSample SAMPLE3, i for i in [0...numSamples SAMPLE3])
+]
+
+exports.SAMPLE = SAMPLE
+
 #----------------------------------------------------------------------------
 # end of xcom.coffee

@@ -15,10 +15,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #----------------------------------------------------------------------------
 
-{COLOR_GREEN} = require '../constant'
+{
+  COLOR_GREEN,
+  COLOR_YELLOW,
+  SAMPLE_BUTTON_PUSH
+} = require '../constant'
 
+font = require '../font'
 gfx = require '../gfx'
 renderer = require '../render'
+sound = require '../sound'
 xcom = require '../xcom'
 
 {Button} = require '../gui/button'
@@ -30,6 +36,7 @@ englishButton = null
 germanButton = null
 frenchButton = null
 nextActivity = null
+buttonPushSample = null
 
 createGui = (canvas) ->
   englishButton = new Button canvas, COLOR_GREEN, 192, 20, 64, 90, 'ENGLISH', ->
@@ -37,18 +44,21 @@ createGui = (canvas) ->
       language: 'ENGLISH'
       strings: [xcom.ENGLISH, xcom.ENGLISH2]
     nextActivity = newLoadQuitGameActivity
+    sound.playSample buttonPushSample
 
   germanButton = new Button canvas, COLOR_GREEN, 192, 20, 64, 118, 'DEUTSCHE', ->
     window.APP =
       language: 'DEUTSCHE'
       strings: [xcom.GERMAN, xcom.GERMAN2]
     nextActivity = newLoadQuitGameActivity
+    sound.playSample buttonPushSample
 
   frenchButton = new Button canvas, COLOR_GREEN, 192, 20, 64, 146, 'FRANCAIS', ->
     window.APP =
       language: 'FRANCAIS'
       strings: [xcom.FRENCH, xcom.FRENCH2]
     nextActivity = newLoadQuitGameActivity
+    sound.playSample buttonPushSample
 
   lastScale = canvas.scale
 
@@ -58,6 +68,7 @@ activity =
   enter: ->
     # by default, this will be the next activity
     nextActivity = activity
+    buttonPushSample = sound.getGeoscapeSample SAMPLE_BUTTON_PUSH
 
   leave: ->
 
@@ -87,6 +98,13 @@ activity =
     # draw the window border
     windowBorder = gfx.getWindowBorder canvas.scale, 0, 134, 256, 160
     renderer.drawGraphic canvas, windowBorder, 32, 20
+    # draw the title text
+      # 145, 45, UFO
+      # 127, 61, Enemy Unknown
+    titleFontSmall = font.getSmallFont canvas.scale, COLOR_YELLOW[0], COLOR_YELLOW[1], false
+    titleFontLarge = font.getLargeFont canvas.scale, COLOR_YELLOW[0], COLOR_YELLOW[1], false
+    renderer.drawCenterText canvas, titleFontLarge, "xcomjs", 45
+    renderer.drawCenterText canvas, titleFontSmall, "Browser Defense", 61
     # draw the language selection buttons
     englishButton.render canvas
     germanButton.render canvas
