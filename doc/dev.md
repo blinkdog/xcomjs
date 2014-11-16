@@ -31,6 +31,11 @@ than access these global arrays directly.
 the binary data from X-COM: UFO Defense in base64 encoded strings. This is
 the raw/unedited data in the format used by X-COM.
 
+### window.GAME
+`window.GAME` is the current game of X-COM in progress. This is undefined
+until the user elects to start a New Game or Load Saved Game. After that
+a Game object will be present here.
+
 ### window.XCOM
 `window.XCOM` is `window.DATA` with minimal parsing to massage the data
 into JavaScript accessible data structures with JavaScript encodings.
@@ -168,3 +173,7 @@ to the browser for `requestAnimationFrame`.
 ## gui
 This subdirectory contains User Interface components. Right now, Button is
 the only class, but provides convenient button behavior.
+
+## state
+This subdirectory contains game state components. The Game class is the
+primary class, representing the current state of a game of X-COM.

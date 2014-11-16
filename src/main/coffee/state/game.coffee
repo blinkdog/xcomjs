@@ -1,4 +1,4 @@
-# loadSavedGame.coffee
+# game.coffee
 # Copyright 2014 Patrick Meade.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -15,10 +15,34 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #----------------------------------------------------------------------------
 
-# TODO: Implement 'Load Saved Game'
-exports.activity =
-  enter: ->
-    alert 'Select Game To Load'
-  
+_ = require 'underscore'
+
+{
+  DIFFICULTY_BEGINNER
+} = require '../constant'
+
+GAME_OBJ_VERSION = 1
+
+NEW_GAME =
+  difficulty: DIFFICULTY_BEGINNER
+  nightmare: false
+  version: GAME_OBJ_VERSION
+
+class Game
+  constructor: (json = "{}") ->
+    try
+      jsonObj = JSON.parse json
+    catch e
+      jsonObj = {}
+    _.defaults @, jsonObj
+    _.defaults @, NEW_GAME
+    @importOlder() if @version < GAME_OBJ_VERSION
+
+  importOlder: ->
+    @version = GAME_OBJ_VERSION
+
+exports.GAME_OBJ_VERSION = GAME_OBJ_VERSION
+exports.Game = Game
+
 #----------------------------------------------------------------------------
-# end of loadSavedGame.coffee
+# end of game.coffee

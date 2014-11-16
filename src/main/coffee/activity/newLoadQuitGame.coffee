@@ -32,6 +32,7 @@ sound = require '../sound'
 {getGeoscapeText} = require '../text'
 
 {Button} = require '../gui/button'
+{Game} = require '../state/game'
 
 selectDifficultyActivity = require('./selectDifficulty').activity
 loadGameActivity = require('./loadSavedGame').activity
@@ -46,20 +47,20 @@ buttonPushSample = null
 createGui = (canvas) ->
   newGameLabel = getGeoscapeText NEW_GAME_LABEL_ID
   newGameButton = new Button canvas, COLOR_GREEN, 192, 20, 64, 90, newGameLabel, ->
+    window.GAME = new Game()
     nextActivity = selectDifficultyActivity
     sound.playSample buttonPushSample
 
   loadSavedGameLabel = getGeoscapeText LOAD_SAVED_GAME_LABEL_ID
   loadSavedGameButton = new Button canvas, COLOR_GREEN, 192, 20, 64, 118, loadSavedGameLabel, ->
-    alert 'Select Game To Load'
     nextActivity = loadGameActivity
     sound.playSample buttonPushSample
 
   quitLabel = getGeoscapeText QUIT_LABEL_ID
   quitButton = new Button canvas, COLOR_GREEN, 192, 20, 64, 146, quitLabel, ->
-    alert 'Quit'
     nextActivity = null
     sound.playSample buttonPushSample
+    window.location.href = 'https://github.com/blinkdog/xcomjs'
 
   lastScale = canvas.scale
 

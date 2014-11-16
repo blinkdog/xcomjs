@@ -20,6 +20,7 @@ DIFFICULTY_LABEL_ID = 782
 {
   COLOR_GREEN,
   COLOR_YELLOW,
+  DIFFICULTY_SUPERHUMAN,
   SAMPLE_BUTTON_PUSH
 } = require '../constant'
 
@@ -31,6 +32,7 @@ sound = require '../sound'
 
 {Button} = require '../gui/button'
 
+confirmNightmareMode = require('./confirmNightmareMode').activity
 selectSiteForNewBaseActivity = require('./selectSiteForNewBase').activity
 
 lastScale = 0
@@ -38,15 +40,21 @@ difficultyButtons = null
 nextActivity = null
 buttonPushSample = null
 
-setGameDifficulty = (difficultyLevel, difficultyLabel) ->
-  alert "Difficulty Level #{difficultyLevel}: #{difficultyLabel}"
+setGameDifficulty = (difficultyLevel) ->
+  window.GAME.difficulty = difficultyLevel
 
 createDifficultyButton = (canvas, index) ->
   buttonLabel = getGeoscapeText DIFFICULTY_LABEL_ID + 1 + index
-  difficultyButton = new Button canvas, COLOR_GREEN, 160, 18, 80, 55+25*index, buttonLabel, ->
-    setGameDifficulty index+1, buttonLabel
+  leftClick = ->
+    setGameDifficulty index+1
     nextActivity = selectSiteForNewBaseActivity
     sound.playSample buttonPushSample
+  if index is DIFFICULTY_SUPERHUMAN
+    rightClick = ->
+      setGameDifficulty index+1
+      nextActivity = confirmNightmareMode
+      sound.playSample buttonPushSample
+  difficultyButton = new Button canvas, COLOR_GREEN, 160, 18, 80, 55+25*index, buttonLabel, leftClick, rightClick
 
 createGui = (canvas) ->
   difficultyButtons = (createDifficultyButton canvas, index for index in [0...5])

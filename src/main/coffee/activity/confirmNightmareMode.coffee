@@ -1,4 +1,4 @@
-# loadSavedGame.coffee
+# confirmNightmareMode.coffee
 # Copyright 2014 Patrick Meade.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -15,10 +15,29 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #----------------------------------------------------------------------------
 
-# TODO: Implement 'Load Saved Game'
+###
+  NOTES:
+    - Should display the standard background (background 0) in the 
+      Terror Site red palette.
+    - Should play the Terror Site MIDI.
+    - Two Buttons
+        - Launch
+        - Cancel
+    - Text similar to:
+    
+          THE NIGHTMARE SCENARIO   <-- big font
+          
+          This is The Nightmare Scenario. The aliens will be unbelievably
+          difficult to defeat. The aliens will actually cheat in order to
+          win the game. The game is practically impossible to win.
+          
+          Do you wish to play The Nightmare Scenario?
+###
+
+# TODO: Implement 'confirmNightmareMode'
 exports.activity =
   enter: ->
-    alert 'Select Game To Load'
-  
+    alert 'The Nightmare Scenario'
+
 #----------------------------------------------------------------------------
-# end of loadSavedGame.coffee
+# end of confirmNightmareMode.coffee
