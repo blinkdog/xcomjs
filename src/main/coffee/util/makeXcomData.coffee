@@ -35,10 +35,13 @@ exports.run = (xcomPath, dataPath) ->
       FRENCH2: source xcomPath, 'GEODATA/FRENCH2.DAT'
       GERMAN: source xcomPath, 'GEODATA/GERMAN.DAT'
       GERMAN2: source xcomPath, 'GEODATA/GERMAN2.DAT'
+      LANG1: source xcomPath, 'GEODATA/LANG1.DAT'
+      LANG2: source xcomPath, 'GEODATA/LANG2.DAT'
       PALETTES: source xcomPath, 'GEODATA/PALETTES.DAT'
       SMALLSET: source xcomPath, 'GEODATA/SMALLSET.DAT'
     GEOGRAPH:
       BACK: (source xcomPath, "GEOGRAPH/BACK#{("0"+i).substr(-2)}.SCR" for i in [1..17])
+      GEOBORD: source xcomPath, 'GEOGRAPH/GEOBORD.SCR'
     SOUND:
       SAMPLE: source xcomPath, 'SOUND/SAMPLE.CAT'
       SAMPLE2: source xcomPath, 'SOUND/SAMPLE2.CAT'

@@ -1,11 +1,21 @@
 # TODO
-* [X] Create new Game class to be stored at window.GAME
-* [X] Research more idiomatic coffee-script x = a || b
-* [X] Add optional right-click behavior for GUI buttons
-* [X] Modify selectDifficulty to support Nightmare difficulty mode
-* [X] Modify newLoadQuitGame to create a new Game object on New Game
-* [X] Modify selectDifficulty to update the Game object
-* [X] Modify newLoadQuitGame to prevent crash on implemented buttons
+* [X] Add Geoscape background to make-xcom-data
+* [X] Add French/German Geoscape background overlays to make-xcom-data
+* [X] Add Geoscape background to window.XCOM
+* [X] Add French/German Geoscape background overlays to window.XCOM
+* [X] Add Geoscape background to gfx
+* [X] Add French/German Geoscape background overlays to gfx
+* [X] Add geoscape background drawing to render
+* [X] Add Select Site for New Base window
+* [ ] Add game start date to date object
+* [ ] Add geoscape game date display component
+* [ ] Create 3D globe display component
+* [ ] Create 3D globe display control buttons
+* [ ] Create globe click handler (create base)
+* [ ] Add Base Name window
+* [ ] Add keyboard event handlers
+* [ ] Allow player to name base
+* [ ] Implement selectSiteForNewBase activity
 * [ ] Improve the installation / X-COM data creation process
 
 ## Ideas

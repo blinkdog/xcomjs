@@ -16,7 +16,11 @@
 #----------------------------------------------------------------------------
 
 _ = require 'underscore'
-{GLYPH_SIZE, XCOM_SIZE} = require './constant'
+{
+  GLYPH_SIZE,
+  OVERLAY_SIZE,
+  XCOM_SIZE
+} = require './constant'
 
 #----------------------------------------------------------------------------
 
@@ -109,6 +113,67 @@ createButtonMemo = _.memoize createButton, createButtonHash
 
 exports.getButton = (scale, palIndex, colIndex, width, height, pressed) ->
   createButtonMemo scale, palIndex, colIndex, width, height, pressed
+
+###
+  Geoscape Background
+###
+createGeoscapeBackground = (scale) ->
+  #console.log 'createGeoscapeBackground %d', scale
+  # obtain the game data from X-COM
+  geobordImg = window.XCOM.GEOBORD
+  palette = window.XCOM.PALETTES[0]
+  # create a canvas element to hold the image data
+  canvas = document.createElement 'canvas'
+  canvas.width = XCOM_SIZE.WIDTH*scale
+  canvas.height = XCOM_SIZE.HEIGHT*scale
+  context = canvas.getContext '2d'
+  pixels = context.getImageData 0, 0, canvas.width, canvas.height
+  # draw the background image
+  for y in [0...XCOM_SIZE.HEIGHT]
+    for x in [0...XCOM_SIZE.WIDTH]
+      pixelIndex = geobordImg[y][x]
+      pixel = palette[pixelIndex]
+      putScaledPixel scale, pixels, x, y, pixel
+  context.putImageData pixels, 0, 0
+  return canvas
+
+createGeoscapeBackgroundMemo = _.memoize createGeoscapeBackground
+
+exports.getGeoscapeBackground = (scale) ->
+  createGeoscapeBackgroundMemo scale
+
+###
+  Geoscape Overlay
+###
+createGeoscapeOverlay = (scale, language) ->
+  #console.log 'createGeoscapeOverlay %d %s', scale, language
+  # obtain the game data from X-COM
+  overlayImg = window.XCOM.LANG1 if language is 'DEUTSCHE'
+  overlayImg = window.XCOM.LANG2 if language is 'FRANCAIS'
+  return null if not overlayImg?
+  palette = window.XCOM.PALETTES[0]
+  # create a canvas element to hold the image data
+  canvas = document.createElement 'canvas'
+  canvas.width = OVERLAY_SIZE.WIDTH*scale
+  canvas.height = OVERLAY_SIZE.HEIGHT*scale
+  context = canvas.getContext '2d'
+  pixels = context.getImageData 0, 0, canvas.width, canvas.height
+  # draw the background image
+  for y in [0...OVERLAY_SIZE.HEIGHT]
+    for x in [0...OVERLAY_SIZE.WIDTH]
+      pixelIndex = overlayImg[y][x]
+      pixel = palette[pixelIndex]
+      putScaledPixel scale, pixels, x, y, pixel
+  context.putImageData pixels, 0, 0
+  return canvas
+
+createGeoscapeOverlayHash = (scale, language) ->
+  "#{scale},#{language}"
+
+createGeoscapeOverlayMemo = _.memoize createGeoscapeOverlay, createGeoscapeOverlayHash
+
+exports.getGeoscapeOverlay = (scale, language) ->
+  createGeoscapeOverlayMemo scale, language
 
 ###
   Large Glyphs

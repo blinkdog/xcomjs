@@ -16,6 +16,7 @@
 #----------------------------------------------------------------------------
 
 exports.COLOR_GREEN = [0, 134]        # Palette 0, Index 134
+exports.COLOR_OTHER_GREEN = [0, 240]  # Palette 0, Index 240
 exports.COLOR_YELLOW = [0, 139]       # Palette 0, Index 139
 
 exports.DIFFICULTY_BEGINNER = 0
@@ -37,6 +38,10 @@ exports.MOUSE_BUTTON_LEFT = 0
 exports.MOUSE_BUTTON_MIDDLE = 1
 
 exports.MOUSE_BUTTON_RIGHT = 2
+
+exports.OVERLAY_SIZE =
+  WIDTH: 64
+  HEIGHT: 154
 
 exports.SAMPLE_BUTTON_PUSH = 0
 

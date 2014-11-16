@@ -84,7 +84,7 @@ drawAnimationFrame = (timestamp) ->
     displayText = displayText.trim()
     buttonFont = font.getSmallFont canvas.scale, 0, 134
     background = gfx.getBackgroundImage canvas.scale, 0, 0
-    render.drawBackground canvas, background, 0, 0, 320, 9
+    render.drawBackground canvas, background, 0, 0, 256, 9
     render.drawText canvas, buttonFont, displayText, 0, 0
   # request another animation frame when it is time
   requestAnimationFrame drawAnimationFrame

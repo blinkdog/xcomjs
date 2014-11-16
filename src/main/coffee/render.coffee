@@ -15,10 +15,30 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #----------------------------------------------------------------------------
 
+{
+  OVERLAY_SIZE,
+  XCOM_SIZE
+} = require './constant'
+
+gfx = require './gfx'
+
 exports.clearCanvas = (canvas) ->
   context = canvas.getContext("2d")
   context.fillStyle = '#000000'
   context.clearRect 0, 0, canvas.width, canvas.height
+
+exports.drawGeoscapeBackground = (canvas) ->
+  context = canvas.getContext("2d")
+  background = gfx.getGeoscapeBackground canvas.scale
+  context.drawImage background,
+    0, 0,
+    XCOM_SIZE.WIDTH*canvas.scale, XCOM_SIZE.HEIGHT*canvas.scale,
+    canvas.ox, canvas.oy,
+    XCOM_SIZE.WIDTH*canvas.scale, XCOM_SIZE.HEIGHT*canvas.scale
+  overlay = gfx.getGeoscapeOverlay canvas.scale, window.APP.language
+  if overlay?
+    context.drawImage overlay,
+      canvas.ox+(XCOM_SIZE.WIDTH-OVERLAY_SIZE.WIDTH)*canvas.scale, canvas.oy
 
 exports.drawBackground = (canvas, background, x1, y1, width, height) ->
   context = canvas.getContext("2d")

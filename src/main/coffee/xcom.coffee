@@ -111,6 +111,32 @@ GERMAN2 = new Buffer window.DATA.GEODATA.GERMAN2, 'base64'
 exports.GERMAN2 = parseStrings GERMAN2
 
 ###
+  GEOGRAPH/GEOBORD.SCR
+###
+GEOBORD = new Buffer window.DATA.GEOGRAPH.GEOBORD, 'base64'
+exports.GEOBORD = reframeBack GEOBORD
+
+###
+  GEODATA/LANGx.DAT | x = [1..2]
+###
+reframeGeoscapeOverlay = (overlay) ->
+  OVERLAY_WIDTH = 64
+  OVERLAY_HEIGHT = 154
+  result = []
+  for i in [0...OVERLAY_HEIGHT]
+    row = []
+    for j in [0...OVERLAY_WIDTH]
+      row.push overlay[i*OVERLAY_WIDTH+j]
+    result.push row
+  return result
+
+LANG1 = new Buffer window.DATA.GEODATA.LANG1, 'base64'
+exports.LANG1 = reframeGeoscapeOverlay LANG1
+
+LANG2 = new Buffer window.DATA.GEODATA.LANG2, 'base64'
+exports.LANG2 = reframeGeoscapeOverlay LANG2
+
+###
   GEODATA/PALETTES.DAT
 ###
 PALETTES = new Buffer window.DATA.GEODATA.PALETTES, 'base64'

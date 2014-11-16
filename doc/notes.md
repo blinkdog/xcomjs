@@ -207,3 +207,15 @@ with upper-left coordinates:
 
 The buttons have dimensions: 160, 18. The labels are covered under
 Text Resources above.
+
+## Select Site For New Base
+The background (back palette 0) and window border (COLOR_OTHER_GREEN), start
+at upper-left coordinates 0, 0 and have dimensions: 256, 28
+
+The text "SELECT SITE FOR NEW BASE" is displayed in the small font
+with the (COLOR_GREEN) palette. It starts at upper-left coordinates: 8, 10.
+It is found in the string resources at Index 283:
+
+    window.XCOM.ENGLISH[283] = "SELECT SITE FOR NEW BASE"
+
+COLOR_OTHER_GREEN seems to be palette 0 at Index 240

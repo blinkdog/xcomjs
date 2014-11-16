@@ -1,6 +1,6 @@
 {
     "name": "xcomjs",
-    "version": "0.0.18",
+    "version": "0.0.19",
     "description": "X-COM: Browser Defense",
     "keywords": [
         "browser",
@@ -34,14 +34,12 @@
         "type": "git",
         "url": "https://github.com/blinkdog/xcomjs.git"
     },
-    "dependencies": {
-        "underscore": "1.7.0"
-    },
     "devDependencies": {
-        "browserify": "6.2.0",
+        "browserify": "6.3.2",
         "coffee-script": "1.8.0",
         "istanbul": "0.3.2",
         "mocha": "2.0.1",
-        "should": "4.1.0"
+        "should": "4.3.0",
+        "underscore": "1.7.0"
     }
 }
