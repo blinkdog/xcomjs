@@ -26,13 +26,23 @@ gfx = require '../gfx'
 renderer = require '../render'
 text = require '../text'
 
+{GeoscapeDate} = require '../gui/geodate'
+
+geodate = null
+lastScale = null
+lastUpdate = 0
+
+createGui = (canvas) ->
+  geodate = new GeoscapeDate canvas
+  lastScale = canvas.scale
+
 activity =
   # the name of the activity
   name: "Select Site for New Base"
   
   # called before this activity begins
   enter: ->
-    alert @name
+    #alert @name
   
   # called after this activity is finished
   leave: ->
@@ -48,6 +58,7 @@ activity =
   
   # called by the game engine to draw the display
   render: (timestamp, canvas) ->
+    createGui canvas if canvas.scale isnt lastScale
     # clear the canvas to black
     renderer.clearCanvas canvas
     # draw the geoscape background and necessary overlays
@@ -62,9 +73,24 @@ activity =
     titleFontSmall = font.getSmallFont canvas.scale, COLOR_OTHER_GREEN[0], COLOR_OTHER_GREEN[1], false
     titleText = text.getGeoscapeText SELECT_SITE_FOR_NEW_BASE_ID
     renderer.drawText canvas, titleFontSmall, titleText, 8, 10
+    # draw the geoscape date
+    geodate.render canvas, window.GAME
   
   # called by the game engine to update logic/state
-  update: (timestamp) -> this
+  update: (timestamp) ->
+    # 5 sec
+    #window.GAME.date += 5000
+    # 1 min
+    #window.GAME.date += 60000
+    # 5 min
+    #window.GAME.date += 300000
+    # 30 min
+    #window.GAME.date += 1800000
+    # 1 hour
+    #window.GAME.date += 3600000
+    # 1 day
+    window.GAME.date += 86400000
+    this
 
 # export this activity to others
 exports.activity = activity

@@ -88,6 +88,8 @@ measureLarge = (text) ->
     else
       charIndex = @encoding.indexOf char
       fontObj = @[charIndex]
+      if not fontObj?
+        console.error "Unencoded large letter: %s = %d", char, charIndex
       width += fontObj.width
   return width
 
@@ -100,6 +102,8 @@ measureSmall = (text) ->
     else
       charIndex = @encoding.indexOf char
       fontObj = @[charIndex]
+      if not fontObj?
+        console.error "Unencoded small letter: %s = %d", char, charIndex
       width += fontObj.width
   return width
 

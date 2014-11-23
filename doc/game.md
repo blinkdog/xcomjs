@@ -12,6 +12,17 @@ provided to the constructor of the `Game` object.
 
 ## Game (fields)
 
+### date
+The current date in the game. At the beginning of a new game, this is set
+to the present moment. This field changes almost continuously throughout
+the game as progress is made by the player.
+
+    Type:   Number
+    Valid:  0+
+
+The format is a Unix offset (milliseconds). The timezone is assumed to be
+UTC (GMT+0:00).
+
 ### difficulty
 The difficulty level of the game. This is selected at the beginning of a
 new game and does not change throughout the game.

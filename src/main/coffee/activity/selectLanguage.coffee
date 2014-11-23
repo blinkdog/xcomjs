@@ -15,6 +15,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #----------------------------------------------------------------------------
 
+moment = require 'moment'
+momentDe = require 'moment/locale/de'
+momentFr = require 'moment/locale/fr'
+
 {
   COLOR_GREEN,
   COLOR_YELLOW,
@@ -42,6 +46,7 @@ createGui = (canvas) ->
   englishButton = new Button canvas, COLOR_GREEN, 192, 20, 64, 90, 'ENGLISH', ->
     window.APP =
       language: 'ENGLISH'
+      locale: 'en'
       strings: [xcom.ENGLISH, xcom.ENGLISH2]
     nextActivity = newLoadQuitGameActivity
     sound.playSample buttonPushSample
@@ -49,6 +54,7 @@ createGui = (canvas) ->
   germanButton = new Button canvas, COLOR_GREEN, 192, 20, 64, 118, 'DEUTSCHE', ->
     window.APP =
       language: 'DEUTSCHE'
+      locale: 'de'
       strings: [xcom.GERMAN, xcom.GERMAN2]
     nextActivity = newLoadQuitGameActivity
     sound.playSample buttonPushSample
@@ -56,6 +62,7 @@ createGui = (canvas) ->
   frenchButton = new Button canvas, COLOR_GREEN, 192, 20, 64, 146, 'FRANCAIS', ->
     window.APP =
       language: 'FRANCAIS'
+      locale: 'fr'
       strings: [xcom.FRENCH, xcom.FRENCH2]
     nextActivity = newLoadQuitGameActivity
     sound.playSample buttonPushSample
@@ -71,6 +78,8 @@ activity =
     buttonPushSample = sound.getGeoscapeSample SAMPLE_BUTTON_PUSH
 
   leave: ->
+    # set moment's global locale to the language selected by the user
+    moment.locale window.APP.locale
 
   mousedown: (e) ->
     englishButton?.mousedown e

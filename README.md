@@ -38,6 +38,11 @@ I were tutoring someone on the code, those are the points that I would
 go over with them. Reading this document is probably the best way to get
 a feel for the moving parts of the codebase.
 
+`doc/game.md` describes the JSON structure of the game object. If you
+want to make a classic saved-game editor, or maybe just pad X-COM's
+bank account with a few extra zeros, this is the file that will tell
+you the details needed to do that.
+
 ## Thanks
 I wrote xcomjs, but drew heavily upon the reference material found at
 [UFOpaedia.org](http://ufopaedia.org/). Truly, my code stands upon the

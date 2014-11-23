@@ -1,6 +1,6 @@
 {
     "name": "xcomjs",
-    "version": "0.0.19",
+    "version": "0.0.20",
     "description": "X-COM: Browser Defense",
     "keywords": [
         "browser",
@@ -39,6 +39,7 @@
         "coffee-script": "1.8.0",
         "istanbul": "0.3.2",
         "mocha": "2.0.1",
+        "moment": "2.8.4",
         "should": "4.3.0",
         "underscore": "1.7.0"
     }

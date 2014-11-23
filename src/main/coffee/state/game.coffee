@@ -16,6 +16,7 @@
 #----------------------------------------------------------------------------
 
 _ = require 'underscore'
+moment = require 'moment'
 
 {
   DIFFICULTY_BEGINNER
@@ -24,6 +25,7 @@ _ = require 'underscore'
 GAME_OBJ_VERSION = 1
 
 NEW_GAME =
+  date: moment().utc().startOf('month').add(1, 'months').valueOf()
   difficulty: DIFFICULTY_BEGINNER
   nightmare: false
   version: GAME_OBJ_VERSION

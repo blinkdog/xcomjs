@@ -219,3 +219,56 @@ It is found in the string resources at Index 283:
     window.XCOM.ENGLISH[283] = "SELECT SITE FOR NEW BASE"
 
 COLOR_OTHER_GREEN seems to be palette 0 at Index 240
+
+## The current date on the Geoscape
+This one really is an odd display. The background is basically a large button
+and the current date and time is drawn on top of it. The coordinates given
+in this section are relative to the upper-left corner of the button at 0,0.
+
+The color scheme used for the font is a scheme I'm calling COLOR_DATE_BLUE.
+It is part of the geoscape palette (palette 0) starting at index 245.
+
+The way the time is drawn depends on the current time. The hours, the minutes,
+and the colons separating hours, minutes, and seconds are drawn in the large
+font. The colons are fixed at 22,2 and 46,2 and never change.
+
+Between 1 and 9 (inclusive), the hour is right-justified and drawn at 12,2
+and between 10 and 23 (inclusive), the hour is left-justified and drawn at
+2,2. 
+
+The minutes are always left-justified and drawn at 26,2.
+
+The seconds are drawn in the small font, and relatively speaking sit on a
+slightly lower baseline than the hours and minutes. The seconds are left
+justified and always drawn at 50,8.
+
+For the rest of the date, I ignored the way X-COM renders it. I'm relying
+on an external library (moment.js) to do the date handling. One of the
+features of the library is localization. So instead of relying upon the
+French and German string resources, I allow the library to provide a
+properly localized result.
+
+X-COM rendered the day of the week in upper-case letters. I chose to retain
+this, and simply center it horizontally in the 63-pixel wide button where
+the date information is rendered.
+
+Similarly with the day of the month and the month, they are rendered per
+the localization of the library and centered horizontally in the button.
+
+Similarly with the year, it is centered horizontally in the button.
+
+A game of X-COM begins on Jan 1st, 1999. In 1994 when X-COM was released,
+this was ~5 years into the future and seemed a long way off. Today, it
+seems like it was a long time ago. I wanted to retain the feeling that the
+game is set [twenty minutes into the future](http://tvtropes.org/pmwiki/pmwiki.php/Main/TwentyMinutesIntoTheFuture).
+
+At first, I thought to start games of xcomjs at the present time. That is,
+if you started a game on 15 August 2020, then the initial date of the game
+itself would be 15 August 2020. The problem here is that X-COM has game
+mechanics that work on a monthly basis; vehicle rental, base maintenance,
+salaries paid, activity vs. aliens, etc.
+
+So I decided to start games of xcomjs on the first of the following month.
+If you start a game on 15 August 2020, then the date of the start of the
+game will be 01 September 2020. Starting a game on 01 September 2020 would
+result in a game start date of 01 October 2020 and so forth.

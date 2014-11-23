@@ -39,6 +39,11 @@ describe 'Game', ->
       newGame = new Game "{}"
       newGame.should.have.property 'version'
       newGame.version.should.be.above 0
+      
+    it 'should have a date property', ->
+      newGame = new Game "{}"
+      newGame.should.have.property 'date'
+      newGame.date.should.be.above 0
 
   describe 'loaded games', ->
     describe 'invalid games', ->

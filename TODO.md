@@ -7,8 +7,8 @@
 * [X] Add French/German Geoscape background overlays to gfx
 * [X] Add geoscape background drawing to render
 * [X] Add Select Site for New Base window
-* [ ] Add game start date to date object
-* [ ] Add geoscape game date display component
+* [X] Add game start date to date object
+* [X] Add geoscape game date display component
 * [ ] Create 3D globe display component
 * [ ] Create 3D globe display control buttons
 * [ ] Create globe click handler (create base)
